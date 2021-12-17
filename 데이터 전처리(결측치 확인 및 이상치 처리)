@@ -1,0 +1,186 @@
+setwd("C:/workspace/R_basic/pjt1.4")
+
+data1<-read.csv("가구원수별_가구당_월평균_가계수지__전국_1인이상(2019-2021).csv", header=TRUE)
+
+sum(is.na(data1))
+
+data2<-read.csv("간편식_HMR__주_이용_용도_(2019-2020).csv", header=TRUE)
+
+sum(is.na(data2))
+
+data3<-read.csv("온라인쇼핑몰_취급상품범위별_상품군별거래액(2019-2021).csv", header=TRUE)
+
+sum(is.na(data3))
+
+data4<-read.csv("온라인으로_식품을_구매하는_장소(2019-2020).csv", header=TRUE)
+
+sum(is.na(data4))
+
+data5<-read.csv("인터넷_쇼핑_성_연령별(2019-2020).csv", header=TRUE)
+
+sum(is.na(data5))
+
+data6<-read.csv("지출액_기준_온라인으로_많이_구입하는_가공식품_품목군(2019-2020).csv", header=TRUE)
+
+sum(is.na(data6))
+
+data7<-read.csv("최근_1년간_온라인_가공식품_구입_변화(2019-2020).csv", header=TRUE)
+
+sum(is.na(data7))
+
+data8<-read.csv("코로나 확진자 현황.csv", header=TRUE)
+str(data8)
+data8<-data8[,!names(data8)%in%c("누적확진률")]
+
+sum(is.na(data8))
+
+
+#data1의 형변환에따른 NA 제거
+data1.1 <-as.numeric(data1[43,])
+data1.1 <-data1.1[complete.cases(data1.1)]
+data1.2<-as.numeric(data1[53,])
+data1.2<-data1.2[complete.cases(data1.2)]
+
+#이상치 확인을 위한 boxplot 
+#식료품/비주류음료 이상치 확인
+boxplot(data1.1)
+#음식,숙박 이상치 확인
+boxplot(data1.2)
+
+
+#data2의 형변환에 따른 NA 제거
+data2.1<-as.numeric(data2[10,])
+data2.1<-data2.1[complete.cases(data2.1)]
+
+#1인가구 이상치 확인
+#유의미한 이상치 이므로 삭제하지 않음
+boxplot(data2.1)
+
+
+#data3의 형변환에 따른 NA 제거
+data3.1<-as.numeric(data3[37,])
+data3.1<-data3.1[complete.cases(data3.1)]
+
+data3.2<-as.numeric(data3[40,])
+data3.2<-data3.2[complete.cases(data3.2)]
+
+#음식료품 이상치 확인
+boxplot(data3.1)
+
+#농축수산물 이상치 확인
+boxplot(data3.2)
+
+
+#data4의 형변환에 따른 NA 제거
+data4.1<-as.numeric(data4[9,])
+data4.1<-data4.1[complete.cases(data4.1)]
+
+data4.2<-as.numeric(data4[17,])
+data4.2<-data4.2[complete.cases(data4.2)]
+
+data4.3<-as.numeric(data4[18,])
+data4.3<-data4.3[complete.cases(data4.3)]
+
+data4.4<-as.numeric(data4[19,])
+data4.4<-data4.4[complete.cases(data4.4)]
+
+data4.5<-as.numeric(data4[20,])
+data4.5<-data4.5[complete.cases(data4.5)]
+
+data4.6<-as.numeric(data4[21,])
+data4.6<-data4.6[complete.cases(data4.6)]
+
+data4.7<-as.numeric(data4[22,])
+data4.7<-data4.7[complete.cases(data4.7)]
+
+#이상치 확인을 위한 boxplot
+#1인가구 이상치 확인
+#유의미한 이상치이므로 삭제하지 않음
+boxplot(data4.1)
+
+#소득별 이상치 확인
+#유의미한 이상치이므로 삭제하지 않음
+boxplot(data4.2)
+boxplot(data4.3)
+boxplot(data4.4)
+boxplot(data4.5)
+boxplot(data4.6)
+boxplot(data4.7)
+
+#data5 이상치 없음
+
+
+#data6 형변환에따른 NA 제거
+data6.1<-as.numeric(data6[11,])
+data6.1<-data6.1[complete.cases(data6.1)]
+
+data6.2<-as.numeric(data6[31,])
+data6.2<-data6.2[complete.cases(data6.2)]
+
+data6.3<-as.numeric(data6[32,])
+data6.3<-data6.3[complete.cases(data6.3)]
+
+data6.4<-as.numeric(data6[33,])
+data6.4<-data6.4[complete.cases(data6.4)]
+
+data6.5<-as.numeric(data6[34,])
+data6.5<-data6.5[complete.cases(data6.5)]
+
+data6.6<-as.numeric(data6[35,])
+data6.6<-data6.6[complete.cases(data6.6)]
+
+data6.7<-as.numeric(data6[36,])
+data6.7<-data6.7[complete.cases(data6.7)]
+
+#이상치 확인을 위한 boxplot
+#1인가구 이상치 확인
+#유의미한 이상치이므로 제거하지 않음
+boxplot(data6.1)
+
+#소득별 이상치 확인
+#유의미한 이상치이므로 제거하지 않음
+boxplot(data6.2)
+boxplot(data6.3)
+boxplot(data6.4)
+boxplot(data6.5)
+boxplot(data6.6)
+boxplot(data6.7)
+
+
+#data7형변환에따른 NA 제거
+data7.1<-as.numeric(data7[9,])
+data7.1<-data7.1[complete.cases(data7.1)]
+
+data7.2<-as.numeric(data7[17,])
+data7.2<-data7.2[complete.cases(data7.2)]
+
+data7.3<-as.numeric(data7[18,])
+data7.3<-data7.3[complete.cases(data7.3)]
+
+data7.4<-as.numeric(data7[19,])
+data7.4<-data7.4[complete.cases(data7.4)]
+
+data7.5<-as.numeric(data7[20,])
+data7.5<-data7.5[complete.cases(data7.5)]
+
+data7.6<-as.numeric(data7[21,])
+data7.6<-data7.6[complete.cases(data7.6)]
+
+data7.7<-as.numeric(data7[22,])
+data7.7<-data7.7[complete.cases(data7.7)]
+
+#이상치 확인을 위한 boxplot
+#1인가구 이상치 확인
+#유의미한 이상치이므로 제거하지 않음
+boxplot(data7.1)
+
+#소득별 이상치 확인
+#유의미한 이상치이므로 제거하지 않음
+boxplot(data7.2)
+boxplot(data7.3)
+boxplot(data7.4)
+boxplot(data7.5)
+boxplot(data7.6)
+boxplot(data7.7)
+
+#data8 이상치 없음
