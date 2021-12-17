@@ -1,0 +1,45 @@
+setwd('C:/Users/gpfl9/Desktop/bigdata_analysis/mini_project4')
+corona <- read.csv('코로나 확진자 현황.csv')
+
+
+corona$date <- gsub("/","-",corona$등록일시분초) 
+corona$date <- substr(date,1,10) # delete the time info
+corona <- corona[,-c(1,2,3,5,6,7,8)] 
+
+
+## reverse of sum to get the daily counts 
+
+corona$daily <- c(corona$누적확진자수[1],diff(corona$누적확진자수))
+corona$daily <- abs(corona$daily) # 하루 확진자 수
+
+corona <- corona[c(3,4,1,2)]
+#sort(corona$누적확진자수, decreasing=F)
+
+#write.csv(corona,'corona.csv')
+
+
+
+
+## 월별 합계 구하기 
+
+#install.packages('tidyverse')
+library('tidyverse')
+#install.packages('lubridate')
+library('lubridate')
+
+
+corona2 <- cbind(corona,month=month(corona$date)) # month column
+
+crn_2021 <- corona2[c(2:349),]  #2021 from the start of 349 row (jan)
+crn_2020 <- corona2[c(350:nrow(corona2)),] # split each year
+
+#install.packages('reshape2')
+library('reshape2')
+
+month_mean_2021 <- dcast(crn_2021, month ~., value.var = "daily", mean)
+month_mean_2020 <- dcast(crn_2020, month ~., value.var = "daily", mean)
+
+
+
+write.csv(month_mean_2021,'month_mean_2021.csv')
+write.csv(month_mean_2020,'month_mean_2020.csv')
