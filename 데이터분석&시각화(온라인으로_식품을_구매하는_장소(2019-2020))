@@ -1,0 +1,113 @@
+setwd("C:/workspace/R_basic/pjt1.4")
+
+data4<-read.csv("온라인으로_식품을_구매하는_장소(2019-2020).csv", header=TRUE)
+
+#1인가구 온라인 식품 구매장소 비율
+#2019년도
+v2019.1<-as.vector(as.matrix(data4[9,c(3:10)]))
+#2020년도
+v2020.1<-as.vector(as.matrix(data4[9,c(11:18)]))
+
+#소득별 온라인 식품 구매장소 비율
+#2019년도 200만원 미만
+v2019.2<-as.vector(as.matrix(data4[17, c(3:10)]))
+#2020년도 200만원 미만
+v2020.2<-as.vector(as.matrix(data4[17, c(11:18)]))
+
+#2019년도 200~300만원 미만
+v2019.3<-as.vector(as.matrix(data4[18, c(3:10)]))
+#2020년도 200~300만원 미만
+v2020.3<-as.vector(as.matrix(data4[18, c(11:18)]))
+
+#2019년도 300~400만원 미만
+v2019.4<-as.vector(as.matrix(data4[19, c(3:10)]))
+#2020년도 300~400만원 미만
+v2020.4<-as.vector(as.matrix(data4[19, c(11:18)]))
+
+#2019년도 400~500만원 미만만
+v2019.5<-as.vector(as.matrix(data4[20, c(3:10)]))
+#2020년도 400~500만원 미만만
+v2020.5<-as.vector(as.matrix(data4[20, c(11:18)]))
+
+#2019년도 500~600만원 미만만
+v2019.6<-as.vector(as.matrix(data4[21, c(3:10)]))
+#2020년도 500~600만원 미만만
+v2020.6<-as.vector(as.matrix(data4[21, c(11:18)]))
+
+#2019년도 600만원 이상
+v2019.7<-as.vector(as.matrix(data4[22, c(3:10)]))
+#2020년도 600만원 이상
+v2020.7<-as.vector(as.matrix(data4[22, c(11:18)]))
+
+#colname 확인
+names<-as.character(data4[1,c(3:length(data4))])
+
+#연도별 1인가구 온라인 식품 구매장소 비율 시계열분석/시각화
+mat1<-rbind(v2019.1,v2020.1)
+mat1<-as.numeric(mat1)
+#colname설정
+names<-c("온라인 종합 쇼핑몰","온라인 종합 쇼핑몰", "온라인 식품 전문몰" , "온라인 식품 전문몰" ,"대형할인점 온라인 매장","대형할인점 온라인 매장",
+         "친환경 전문점 온라인 매장","친환경 전문점 온라인 매장","특산물 온라인 매장","특산물 온라인 매장","카페 블로그 SNS 등의 공동구매","카페 블로그 SNS 등의 공동구매",
+         "특정식품 온라인매장","특정식품 온라인매장","기타","기타")
+barplot(mat1, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+#분석내용 : 온라인 종합 쇼핑몰, 온라인 식품전문몰에서 구매하는 비중이 코로나 이후 증가했다.
+#대형할인점 온라인 매장에서 구매하는 비중은 코로나이후 감소했다.
+#친환경 전문점 온라인 매장,카페 블로그 SNS등의 공동구매, 특정식품 온라인매장 등은 코로나전후 변화가 없다
+#특산물온라인매장의 구매 비중은 코로나 이후 증가했다.
+
+#연도별 소득별 온라인 식품 구매장소 비율 시계열분석/시각화 
+mat2<-rbind(v2019.2,v2020.2)
+mat2<-as.numeric(mat2)
+barplot(mat2, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+#분석내용: 200만원미만의 소득범위에서는 온라인 종합 쇼핑몰, 온라인 식품전문몰에서 구매하는 비중이 코로나 이후 증가했다.
+#대형할인점 온라인 매장에서 구매하는 비중은 코로나이후 감소했다.
+#친환경 전문점 온라인 매장, 카페 블로그 SNS등의 공동구매에서 구매하는 비중은 코로나 이후 감소했다.
+#특산물 온라인 매장에서 구매하는 비중은 코로나 이후 증가했다.
+#특정식품 온라인매장에서 구매하는 비중은 코로나 이후 감소했다.
+
+mat3<-rbind(v2019.3,v2020.3)
+mat3<-as.numeric(mat3)
+barplot(mat3, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+#분석내용: 200~300만원 미만의 소득범위에서는 온라인 종합쇼핑몰,대형할인점 온라인매장, 특정식품온라인매장 구매비중이 코로나 이후 감소했다.
+#온라인 식품 전문몰, 특산물 온라인 매장 구매 비중은 증가했다.
+#친환경 전문점 온라인 매장, 카페 블로그SNS등의 공동구매, 코로나전후 변화가 없다.
+
+mat4<-rbind(v2019.4,v2020.4)
+mat4<-as.numeric(mat4)
+barplot(mat4, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+#분석내용: 300~400만원 미만의 소득범위에서는 온라인 종합쇼핑몰, 온라인 식품 전문몰, 특정식품 온라인매장, 카페 블로그 SNS등의 공동 구매 등에서 구매하는 비중이 코라나 이후 증가했다.
+#대형할인 온라인매장, 친환경 전문점 온라인 매장, 특산물 온라인 매장에서 구매하는 비중은 코로나 이후 증가했다.
+
+mat5<-rbind(v2019.5,v2020.5)
+mat5<-as.numeric(mat5)
+barplot(mat5, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+#분석내용: 400~500만원 미만의 소득범위에서는 온라인 종합쇼핑몰, 대형할인점 온라인 매장. 특산물 온라인 매장에서 구매하는 비중이 코로나이후 감소했다.
+#온라인 식품 전문몰, 친환경 전문점 온라인 매장에서 구매하는 비중은 코로나 이후 증가했다.
+#카페 블로그 SNS 등의 공동무개는 코로나 전후 변화가 없다.
+
+mat6<-rbind(v2019.6,v2020.6)
+mat6<-as.numeric(mat6)
+barplot(mat6, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+#분석내용: 500~600만원 미만의 소득범위에서는 온라인 종합 쇼핑몰, 온라인 식품 전문몰, 친환경 전문점 온라인 매장에서 구매하는 비중이 코로나 이후 증가했다.
+#대형할인점 온라인 매장, 친환경 전문점 온라인 매장, 카페 블로그SNS등의 공동구매, 특정식품 온라인 매장애서 구매하는 비중은 코로나 이후 감소했다
+
+mat7<-rbind(v2019.7,v2020.7)
+mat7<-as.numeric(mat7)
+barplot(mat7, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+#분석내용: 600만원 이상의 소득범위에서는 온라인 종합 쇼핑몰, 온라인 식품 전문몰, 카페 블로그SNS등의 공동구매로 구매하는 비중이 코로나 이후 증가했다.
+#대형할인점 온라인 매장, 친환경 전문점 온라인 매장에서 구매하는 비중은 코로나 이후 감소했다.
+#특산물 온라인 매장은 코로나 전후 구매 비중의 변화가 없다.
