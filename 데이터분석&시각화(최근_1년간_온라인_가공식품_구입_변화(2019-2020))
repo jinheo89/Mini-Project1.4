@@ -1,0 +1,103 @@
+setwd("C:/workspace/R_basic/pjt1.4")
+
+data7<-read.csv("최근_1년간_온라인_가공식품_구입_변화(2019-2020).csv", header=TRUE)
+
+
+#1인가구 온라인 가공식품 구입 변화
+#2019년도
+v2019.1<-as.vector(as.matrix(data7[9,c(3:7)]))
+#2020년도
+v2020.1<-as.vector(as.matrix(data7[9,c(9:13)]))
+
+
+#소득별 온라인 가공식품 구입변화
+#2019년도 200만원 미만
+v2019.2<-as.vector(as.matrix(data7[17,c(3:7)]))
+#2020년도 200만원 미만
+v2020.2<-as.vector(as.matrix(data7[17,c(9:13)]))
+
+#2019년도 200~300만원 미만
+v2019.3<-as.vector(as.matrix(data7[18,c(3:7)]))
+#2020년도 200~300만원 미만
+v2020.3<-as.vector(as.matrix(data7[18,c(9:13)]))
+
+#2019년도 300~400만원 미만
+v2019.4<-as.vector(as.matrix(data7[19,c(3:7)]))
+#2020년도 300~400만원 미만
+v2020.4<-as.vector(as.matrix(data7[19,c(9:13)]))
+
+#2019년도 400~500만원 미만만
+v2019.5<-as.vector(as.matrix(data7[20,c(3:7)]))
+#2020년도 400~500만원 미만만
+v2020.5<-as.vector(as.matrix(data7[20,c(9:13)]))
+
+#2019년도 500~600만원 미만만
+v2019.6<-as.vector(as.matrix(data7[21,c(3:7)]))
+#2020년도 500~600만원 미만만
+v2020.6<-as.vector(as.matrix(data7[21,c(9:13)]))
+
+#2019년도 600만원 이상
+v2019.7<-as.vector(as.matrix(data7[22,c(3:7)]))
+#2020년도 600만원 이상
+v2020.7<-as.vector(as.matrix(data7[22,c(9:13)]))
+
+
+#colname확인
+data7[1,c(3:length(data7))]
+
+#1인가구 온라인 가공식품 구입 변화 시계열 분석/시각화
+mat1<-rbind(v2019.1,v2020.1)
+mat1<-as.numeric(mat1)
+
+#colname설정
+names<-c("매우 감소했다","매우 감소했다","약산 감소했다","약산 감소했다","1년전과 비교시 변화 없다","1년전과 비교시 변화 없다",
+         "약간 증가했다","약간 증가했다","매우 증가했다","매우 증가했다")
+barplot(mat1, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+#분석내용: 코로나 이후 온라인 가공식품 구입은 약간 증가했다.
+
+#소득별 온라인 가공식품 구입변화 시계열 분석/시각화
+#200만원 미만
+mat2<-rbind(v2019.2,v2020.2)
+mat2<-as.numeric(mat2)
+barplot(mat2, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+#분석내용: 200만원 미만의 소득범위에서는 코로나 이후 온라인 가공식품 구입은 약간 증가했다.
+
+#200~300만원 미만
+mat3<-rbind(v2019.3,v2020.3)
+mat3<-as.numeric(mat3)
+barplot(mat3, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+#분석내용: 200~300만원 미만의 소득범위에서는 코로나 이후 온라인 가공식품 구입은 1년전과 변화 없다.
+
+#300~400만원 미만
+mat4<-rbind(v2019.4,v2020.4)
+mat4<-as.numeric(mat4)
+barplot(mat4, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+#분석내용: 300~400만원 미만의 소득범위에서는 코로나 이후 온라인 가공식품 구입은 약간 증가했다.
+
+#400~500만원 미만만
+mat5<-rbind(v2019.5,v2020.5)
+mat5<-as.numeric(mat5)
+barplot(mat5, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+#분석내용: 400~500만원 미만의 소득범위에서는 코로나 이후 온라인 가공식품 구입은 약간 증가했다.
+
+#500~600만원 미만만
+mat6<-rbind(v2019.6,v2020.6)
+mat6<-as.numeric(mat6)
+barplot(mat6, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+#분석내용: 500~600만원 미만의 소득범위에서는 코로나 이후 온라인 가공식품 구입은 약간 증가했다.
+
+#600만원 이상
+mat7<-rbind(v2019.7,v2020.7)
+mat7<-as.numeric(mat7)
+barplot(mat7, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+#분석내용: 600만원 이상의 소득범위에서는 코로나 이후 온라인 가공식품 구입은 약간 증가했다.
+
+
+
