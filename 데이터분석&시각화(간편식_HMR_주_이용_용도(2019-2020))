@@ -1,0 +1,48 @@
+setwd("C:/workspace/R_basic/pjt1.4")
+
+data2<-read.csv("간편식_HMR__주_이용_용도_(2019-2020).csv", header=TRUE)
+
+#2019년 간편식 종류 colname
+data2[c(1,2),c(3:17)]
+#2020년 간편식 종류 colname
+data2[c(1,2),c(18:32)]
+
+#2019년 1인가구 간편식 이용 비율
+data2[10,c(3:17)]
+#2020년 1인가구 간편식 이용 비율
+data2[10,c(18:32)]
+
+#즉석조리식품
+mt2.11<-as.vector(as.matrix(data2[10,c(3:7)]))
+mt2.21<-as.vector(as.matrix(data2[10,c(18:22)]))
+mat1<-rbind(mt2.11,mt2.21)
+
+#즉석섭취식품
+mt2.12<-as.vector(as.matrix(data2[10,c(8:12)]))
+mt2.22<-as.vector(as.matrix(data2[10,c(23:27)]))
+mat2<-rbind(mt2.12,mt2.22)
+
+#신선편의식품
+mt2.13<-as.vector(as.matrix(data2[10,c(13:17)]))
+mt2.23<-as.vector(as.matrix(data2[10,c(28:32)]))
+mat3<-rbind(mt2.13,mt2.23)
+
+#barplot 시각화
+mat1<-as.numeric(mat1)
+names1<- c("식사대용","식사대용","간식용","간식용",
+         "안주용","안주용","캠핑/여행용","캠핑/여행용",
+         "기타","기타")
+
+barplot(mat1, beside=T,col=rainbow(2), names=names1 )
+legend("topright", legend=c("2019 즉석조리식품","2020 즉석조리식품"), fill=rainbow(2), cex=0.6)
+
+mat2<-as.numeric(mat2)
+barplot(mat2, beside=T,col=rainbow(2), names=names1 )
+legend("topright", legend=c("2019 즉석섭취식품","2020 즉석섭취식품"), fill=rainbow(2), cex=0.6)
+
+mat3<-as.numeric(mat3)
+barplot(mat3, beside=T,col=rainbow(2), names=names1 )
+legend("topright", legend=c("2019 신선편의식품","2020 신선편의식품"), fill=rainbow(2), cex=0.6)
+
+
+
