@@ -1,0 +1,84 @@
+setwd("C:/workspace/R_basic/pjt1.4")
+
+data1<-read.csv("가구원수별_가구당_월평균_가계수지__전국_1인이상(2019-2021).csv", header=TRUE)
+
+#2019년 1인가구 소득 
+v2019.1<-as.vector(as.matrix(data1[34,c(3,6,9,12)]))
+#2020년 1인가구 소득
+v2020.1<-as.vector(as.matrix(data1[34,c(15,18,21,24)]))
+
+#2019년 1인가구 식료품/비주류음료
+v2019.2<-as.vector(as.matrix(data1[43,c(3,6,9,12)]))
+#2020년 1인가구 식료품/비주류음료
+v2020.2<-as.vector(as.matrix(data1[43,c(15,18,21,24)]))
+
+#2019년 1인가구 주류/담배
+v2019.3<-as.vector(as.matrix(data1[44,c(3,6,9,12)]))
+#2020년 1인가구 주류/담배
+v2020.3<-as.vector(as.matrix(data1[44,c(15,18,21,24)]))
+
+#2019 1인가구 음식/숙박
+v2019.4<-as.vector(as.matrix(data1[53,c(3,6,9,12)]))
+#2020 1인가구 음식/숙박
+v2020.4<-as.vector(as.matrix(data1[53,c(15,18,21,24)]))
+
+#코로나 전후 1인가구 소득 변화 시계열 분석/시각화
+mat1<-rbind(v2019.1,v2020.1)
+mat1<-as.numeric(mat1)
+#colname설정
+names<-c("1/4분기","1/4분기","2/4분기","2/4분기","3/4분기","3/4분기","4/4분기","4/4분기")
+barplot(mat1, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+mean(as.numeric(v2020.1))-mean(as.numeric(v2019.1))
+#분석 내용: 코로나 전후 1인가구의 평균 소득은 소폭(13,183원) 감소했다.
+
+#코로나 전후 1인가구 식료품/비주류음료 소비지출 변화 시계열 분석/시각화
+mat2<-rbind(v2019.2,v2020.2)
+barplot(mat2, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+mean(as.numeric(v2020.2))-mean(as.numeric(v2019.2))
+#분석내용: 코로나 전후 1인가구의 식료품/비주류음료 소비지출은 연평균(16,462원) 증가했다. 
+
+#코로나 전후 1인가구 주류/담배 소비지출 변화 시계열 분석/시각화
+mat3<-rbind(v2019.3,v2020.3)
+barplot(mat3, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+mean(as.numeric(v2020.3))-mean(as.numeric(v2019.3))
+#분석내용: 코로나 전후 1인가구 주류/담배 소비지출은 연평균(-811원) 감소했다.
+
+#코로나 전후 1인가구의 음식/숙박 소비지출 변화 시계열 분석/시각화
+mat4<-rbind(v2019.4,v2020.4)
+barplot(mat4, beside=T,col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+
+mean(as.numeric(v2020.4))-mean(as.numeric(v2019.4))
+#분석내용: 코로나 전후 1인가구 음식/숙박 소비지출은 연평균(-7,638원) 감소했다.
+
+
+#1인가구의 소비지출 변화 시계열 분석
+#2019
+df1<-data1[c(43:54),c(3,6,9,12)]
+df1$X2019.1.4<-as.numeric(df1$X2019.1.4)
+df1$X2019.2.4<-as.numeric(df1$X2019.2.4)
+df1$X2019.3.4<-as.numeric(df1$X2019.3.4)
+df1$X2019.4.4<-as.numeric(df1$X2019.4.4)
+df1$mean<-apply(df1,1,mean,na.rm=TRUE)
+df1
+#2020
+df2<-data1[c(43:54),c(15,18,21,24)]
+df2$X2020.1.4<-as.numeric(df2$X2020.1.4)
+df2$X2020.2.4<-as.numeric(df2$X2020.2.4)
+df2$X2020.3.4<-as.numeric(df2$X2020.3.4)
+df2$X2020.4.4<-as.numeric(df2$X2020.4.4)
+df2$mean<-apply(df2,1,mean, na.rm=TRUE)
+df2
+
+mat5<-rbind(df1$mean,df2$mean)
+names<-as.character(data1[c(43:54),2])
+barplot(mat5, beside = T, col=rainbow(2), names=names )
+legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+#분석내용: 코로나전후와 비교해서 식료품,비주류음료의 소비지출은 증가했으며,
+#음식,숙박에대한 소비지출은 감소하였다.
