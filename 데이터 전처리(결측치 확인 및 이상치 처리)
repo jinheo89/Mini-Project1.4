@@ -38,14 +38,18 @@ sum(is.na(data8))
 #data1의 형변환에따른 NA 제거
 data1.1 <-as.numeric(data1[43,])
 data1.1 <-data1.1[complete.cases(data1.1)]
-data1.2<-as.numeric(data1[53,])
-data1.2<-data1.2[complete.cases(data1.2)]
+data1.2 <-as.numeric(data1[44,])
+data1.2 <-data1.2[complete.cases(data1.2)]
+data1.3<-as.numeric(data1[53,])
+data1.3<-data1.3[complete.cases(data1.3)]
 
 #이상치 확인을 위한 boxplot 
 #식료품/비주류음료 이상치 확인
 boxplot(data1.1)
-#음식,숙박 이상치 확인
+#주류/담배 이상치 확인
 boxplot(data1.2)
+#음식,숙박 이상치 확인
+boxplot(data1.3)
 
 
 #data2의 형변환에 따른 NA 제거
