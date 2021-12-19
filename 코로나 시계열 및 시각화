@@ -1,0 +1,51 @@
+## time series analysis of corona
+
+# read files 
+
+setwd('C:/Users/gpfl9/Desktop/bigdata_analysis/mini_project4')
+corona <- read.csv('corona.csv')
+mth_mean_2020 <- read.csv('month_mean_2020.csv')
+mth_mean_2021 <- read.csv('month_mean_2021.csv')
+
+mth_mean_2020 <- mth_mean_2020[,-1]
+names(mth_mean_2020)[2] <- c('mean') #rename 
+
+mth_mean_2021 <- mth_mean_2021[,-1]
+names(mth_mean_2021)[2] <- c('mean')
+
+#mth_mean <- rbind(mth_mean_2020,mth_mean_2021)
+
+mth_mean2 <- cbind(mth_mean_2020,mth_mean_2021) 
+mth_mean2 <- mth_mean2[,-3]
+
+
+
+## Time-series analysis of corona
+
+# x11()
+# par(mfrow=c(1,2))
+# ts.plot(mth_mean_2020)
+# log <- diff(log(mth_mean_2020))
+# plot(log)
+# 
+# 
+# x11()
+# ts.plot(mth_mean_2020,type='1',col='red')
+# 
+# 
+# install.packages('TTR')
+# library('TTR')
+# 
+# plot(mth_mean, main='코로나 확진자 수')
+
+
+library('ggplot2')
+ggplot(mth_mean2,aes(color=month))+geom_line()
+
+p <- ggplot(mth_mean2, aes(x=1:nrow(mth_mean2),y=mean)) + geom_line(color='blue')+geom_line(aes(x=1:nrow(mth_mean2),y=mean.1),color='red')
+
+
+p + labs(x='월(별)',y='확진자 수') + theme_classic() + scale_x_continuous(limits=c(1,12))
+
+
+
