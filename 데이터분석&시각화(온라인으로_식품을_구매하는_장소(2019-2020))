@@ -42,7 +42,7 @@ v2020.7<-as.vector(as.matrix(data4[22, c(11:18)]))
 #colname 확인
 names<-as.character(data4[1,c(3:length(data4))])
 
-#연도별 1인가구 온라인 식품 구매장소 비율 시계열분석/시각화
+#연도별 1인가구 온라인 식품 구매장소 비율 비교분석/시각화
 mat1<-rbind(v2019.1,v2020.1)
 mat1<-as.numeric(mat1)
 #colname설정
@@ -57,7 +57,7 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #친환경 전문점 온라인 매장,카페 블로그 SNS등의 공동구매, 특정식품 온라인매장 등은 코로나전후 변화가 없다
 #특산물온라인매장의 구매 비중은 코로나 이후 증가했다.
 
-#연도별 소득별 온라인 식품 구매장소 비율 시계열분석/시각화 
+#연도별 소득별 온라인 식품 구매장소 비율 비교분석/시각화 
 mat2<-rbind(v2019.2,v2020.2)
 mat2<-as.numeric(mat2)
 barplot(mat2, beside=T,col=rainbow(2), names=names )
