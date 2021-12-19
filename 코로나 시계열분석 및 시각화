@@ -79,22 +79,28 @@ library(gridExtra)
 library(TTR)
 
 #decompose(t_mth_mean, type = c("additive", "multiplicative"), filter = NULL)
-# time series has no or less than 2 periods
+# error: time series has no or less than 2 periods 
 
+
+
+# all values for a new time-series data 
 
 x <- c(0.9166667,121.1724138,205.1935484,29.5666667,24.3000000,44.9000000,47.9354839,
        188.5483871,123.5666667,88.6129032,267.1666667,874.2903226,540.2903,411.3214,
        439.0645,633.4333,585.9032,564.1667,1356.6129,1731.0000,2010.7667,1697.4839,
        2865.4000,6555.1429)
-x <- ts(x,star=c(2020,1),end=c(2021,12),frequency=12)
+
+# transform to time-series 
+x <- ts(x,star=c(2020,1),end=c(2021,12),frequency=12) # frequency = month numbers
 m <- decompose(x)     
-## seasonal figure: 24.65  -0.13 -11.64  -6.77 -29.06 -65.73   1.52  12.13   3.44  -3.54   9.46  65.67
+# seasonal figure: 24.65  -0.13 -11.64  -6.77 -29.06 -65.73   1.52  12.13   3.44  -3.54   9.46  65.67
 round(decompose(x)$figure /10, 2)
+
+
+# plotting 
 
 win.graph()
 plot(x)
 
 library(fpp2)
 ggseasonplot(x, year.labels=TRUE, year.labels.left = TRUE)
-
-
