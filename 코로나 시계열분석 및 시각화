@@ -94,3 +94,7 @@ round(decompose(x)$figure /10, 2)
 win.graph()
 plot(x)
 
+library(fpp2)
+ggseasonplot(x, year.labels=TRUE, year.labels.left = TRUE)
+
+
