@@ -103,4 +103,7 @@ win.graph()
 plot(x)
 
 library(fpp2)
-ggseasonplot(x, year.labels=TRUE, year.labels.left = TRUE)
+ggseasonplot(x, year.labels=TRUE, year.labels.left = TRUE) + 
+ ggtitle('계절성 그래프 : 코로나 확진자 수') + theme_classic()
+  
+  
