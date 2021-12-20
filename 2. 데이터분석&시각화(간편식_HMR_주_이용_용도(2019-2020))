@@ -33,18 +33,18 @@ names1<- c("식사대용","식사대용","간식용","간식용",
          "안주용","안주용","캠핑/여행용","캠핑/여행용",
          "기타","기타")
 
-barplot(mat1, beside=T,col=rainbow(2), names=names1 )
+barplot(mat1, beside=T,col=rainbow(2), names=names1 , main="코로나 전후 1인가구 간편식 이용 비율 비교")
 legend("topright", legend=c("2019 즉석조리식품","2020 즉석조리식품"), fill=rainbow(2), cex=0.6)
 
 mat2<-as.numeric(mat2)
-barplot(mat2, beside=T,col=rainbow(2), names=names1 )
+barplot(mat2, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 1인가구 간편식 이용 비율 비교")
 legend("topright", legend=c("2019 즉석섭취식품","2020 즉석섭취식품"), fill=rainbow(2), cex=0.6)
 
 mat3<-as.numeric(mat3)
-barplot(mat3, beside=T,col=rainbow(2), names=names1 )
+barplot(mat3, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 1인가구 간편식 이용 비율 비교")
 legend("topright", legend=c("2019 신선편의식품","2020 신선편의식품"), fill=rainbow(2), cex=0.6)
+
 
 #분석내용: 코로나 이후 즉석조리식품의 식사대용 이용비율이 증가하였고, 즉석조리 식품, 즉석 섭취식품, 신선편의식품에서 식사대용이 차지하는 비중이 가장 컸다.
 #1인가구의 간편식 이용은 주로 식사대용으로 주로 이루어지고 있고, 그 다음으로 높은 비율은 간식용이였다.
 #신선편의 식품의 경우 코로나 이후 식사대용은 비율은 감소했으나 간식용의 비중은 증가했다.
-
