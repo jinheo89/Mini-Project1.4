@@ -46,10 +46,10 @@ names<-as.character(data4[1,c(3:length(data4))])
 mat1<-rbind(v2019.1,v2020.1)
 mat1<-as.numeric(mat1)
 #colname설정
-names<-c("온라인 종합 쇼핑몰","온라인 종합 쇼핑몰", "온라인 식품 전문몰" , "온라인 식품 전문몰" ,"대형할인점 온라인 매장","대형할인점 온라인 매장",
-         "친환경 전문점 온라인 매장","친환경 전문점 온라인 매장","특산물 온라인 매장","특산물 온라인 매장","카페 블로그 SNS 등의 공동구매","카페 블로그 SNS 등의 공동구매",
-         "특정식품 온라인매장","특정식품 온라인매장","기타","기타")
-barplot(mat1, beside=T,col=rainbow(2), names=names )
+names<-rep(c("온라인 종합 쇼핑몰", "온라인 식품 전문몰" ,"대형할인점 온라인 매장",
+         "친환경 전문점 온라인 매장","특산물 온라인 매장","카페 블로그 SNS 등의 공동구매",
+         "특정식품 온라인매장","기타"), each=2)
+barplot(mat1, beside=T,col=rainbow(2), names=names, main="코로나 전후 1인가구 온라인 식품 구매장소 비율 비교" )
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용 : 온라인 종합 쇼핑몰, 온라인 식품전문몰에서 구매하는 비중이 코로나 이후 증가했다.
@@ -60,7 +60,7 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #연도별 소득별 온라인 식품 구매장소 비율 비교분석/시각화 
 mat2<-rbind(v2019.2,v2020.2)
 mat2<-as.numeric(mat2)
-barplot(mat2, beside=T,col=rainbow(2), names=names )
+barplot(mat2, beside=T,col=rainbow(2), names=names , main="소득이 200만원 미만인 경우 코로나 전후 온라인 식품 구매장소 비율 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 200만원미만의 소득범위에서는 온라인 종합 쇼핑몰, 온라인 식품전문몰에서 구매하는 비중이 코로나 이후 증가했다.
@@ -71,7 +71,7 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat3<-rbind(v2019.3,v2020.3)
 mat3<-as.numeric(mat3)
-barplot(mat3, beside=T,col=rainbow(2), names=names )
+barplot(mat3, beside=T,col=rainbow(2), names=names , main="소득이 200~300만원 미만인 경우 코로나 전후 온라인 식품 구매장소 비율 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 200~300만원 미만의 소득범위에서는 온라인 종합쇼핑몰,대형할인점 온라인매장, 특정식품온라인매장 구매비중이 코로나 이후 감소했다.
@@ -80,7 +80,7 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat4<-rbind(v2019.4,v2020.4)
 mat4<-as.numeric(mat4)
-barplot(mat4, beside=T,col=rainbow(2), names=names )
+barplot(mat4, beside=T,col=rainbow(2), names=names , main="소득이 300~400만원 미만인 경우 코로나 전후 온라인 식품 구매장소 비율 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 300~400만원 미만의 소득범위에서는 온라인 종합쇼핑몰, 온라인 식품 전문몰, 특정식품 온라인매장, 카페 블로그 SNS등의 공동 구매 등에서 구매하는 비중이 코라나 이후 증가했다.
@@ -88,7 +88,7 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat5<-rbind(v2019.5,v2020.5)
 mat5<-as.numeric(mat5)
-barplot(mat5, beside=T,col=rainbow(2), names=names )
+barplot(mat5, beside=T,col=rainbow(2), names=names , main="소득이 400~500만원 미만인 경우 코로나 전후 온라인 식품 구매장소 비율 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 400~500만원 미만의 소득범위에서는 온라인 종합쇼핑몰, 대형할인점 온라인 매장. 특산물 온라인 매장에서 구매하는 비중이 코로나이후 감소했다.
@@ -97,7 +97,7 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat6<-rbind(v2019.6,v2020.6)
 mat6<-as.numeric(mat6)
-barplot(mat6, beside=T,col=rainbow(2), names=names )
+barplot(mat6, beside=T,col=rainbow(2), names=names , main="소득이 500~600만원 미만인 경우 코로나 전후 온라인 식품 구매장소 비율 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 500~600만원 미만의 소득범위에서는 온라인 종합 쇼핑몰, 온라인 식품 전문몰, 친환경 전문점 온라인 매장에서 구매하는 비중이 코로나 이후 증가했다.
@@ -105,9 +105,19 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat7<-rbind(v2019.7,v2020.7)
 mat7<-as.numeric(mat7)
-barplot(mat7, beside=T,col=rainbow(2), names=names )
+barplot(mat7, beside=T,col=rainbow(2), names=names , main="소득이 600만원 이상인 경우 코로나 전후 온라인 식품 구매장소 비율 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 600만원 이상의 소득범위에서는 온라인 종합 쇼핑몰, 온라인 식품 전문몰, 카페 블로그SNS등의 공동구매로 구매하는 비중이 코로나 이후 증가했다.
 #대형할인점 온라인 매장, 친환경 전문점 온라인 매장에서 구매하는 비중은 코로나 이후 감소했다.
 #특산물 온라인 매장은 코로나 전후 구매 비중의 변화가 없다.
+
+
+#종합 분석 및 분석 결과 활용:
+#소득이 200만원 미만인경우와 소득이 600만원이상인 경우를 비교해보면 코로나 이후 공통적으로 온라인 종합 쇼핑몰, 온라인 식품 전문몰에서 구매하는 비율이 증가했고,
+#대형할인점 온라인 매장은 비율이 감소했다.
+#1인가구의 경우 이와 유사한 경향을 보인다.
+#따라서 본 비교분석을 통해 상품추천을 진행한다면 온라인 종합쇼핑몰이나 온라인 식품 전문몰에 상품추천 서비스를 적용하면 적절할것으로 판단된다. 
+
+
+
