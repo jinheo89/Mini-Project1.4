@@ -88,6 +88,7 @@ a <- t_prod_2020 %>%
   geom_line(size=1)+
   geom_point(size=2.5) +
   geom_point(color='#FFFFFF',size=2.5) +
+  xlab('2020년') + ylab('거래액') + labs(color='상품군') +
   scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))
 
 b <- t_prod_2021 %>%
@@ -96,6 +97,7 @@ b <- t_prod_2021 %>%
   geom_line(size=1)+
   geom_point(size=2.5) +
   geom_point(color='#FFFFFF',size=2.5) +
+  xlab('2021년') + ylab('거래액') + labs(color='상품군') +
   scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))
 
 grid.arrange(a,b,nrow=1,ncol=2,
