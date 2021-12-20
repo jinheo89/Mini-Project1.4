@@ -79,6 +79,7 @@ longer_2021 <- t_prod_2021 %>%
 ## plotting 
 
 
+library(grid)
 library(gridExtra)
 
 a <- t_prod_2020 %>%
@@ -97,5 +98,8 @@ b <- t_prod_2021 %>%
   geom_point(color='#FFFFFF',size=2.5) +
   scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))
 
-grid.arrange(a,b,nrow=1,ncol=2)
+grid.arrange(a,b,nrow=1,ncol=2,
+             top=textGrob('온라인 쇼핑몰 상품군별 거래액', gp=gpar(fontsize=18, font=4)))
+
+
 
