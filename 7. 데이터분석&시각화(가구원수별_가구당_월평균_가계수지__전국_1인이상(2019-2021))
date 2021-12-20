@@ -27,7 +27,7 @@ mat1<-rbind(v2019.1,v2020.1)
 mat1<-as.numeric(mat1)
 #colname설정
 names<-rep(c("1/4분기","2/4분기","3/4분기","4/4분기"), each=2)
-barplot(mat1, beside=T,col=rainbow(2), names=names )
+barplot(mat1, beside=T,col=rainbow(2), names=names , main="코로나 전후 1인가구 소득 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mean(as.numeric(v2020.1))-mean(as.numeric(v2019.1))
@@ -36,7 +36,7 @@ mean(as.numeric(v2020.1))-mean(as.numeric(v2019.1))
 #코로나 전후 1인가구 식료품/비주류음료 소비지출 변화 비교 분석/시각화
 mat2<-rbind(v2019.2,v2020.2)
 mat2<-as.numeric(mat2)
-barplot(mat2, beside=T,col=rainbow(2), names=names )
+barplot(mat2, beside=T,col=rainbow(2), names=names , main="코로나 전후 1인가구 식료품/비주류음료 소비지출 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mean(as.numeric(v2020.2))-mean(as.numeric(v2019.2))
@@ -45,7 +45,7 @@ mean(as.numeric(v2020.2))-mean(as.numeric(v2019.2))
 #코로나 전후 1인가구 주류/담배 소비지출 변화 비교 분석/시각화
 mat3<-rbind(v2019.3,v2020.3)
 mat3<-as.numeric(mat3)
-barplot(mat3, beside=T,col=rainbow(2), names=names )
+barplot(mat3, beside=T,col=rainbow(2), names=names ,main="코로나 전후 1인가구 주류/담배 소비지출 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mean(as.numeric(v2020.3))-mean(as.numeric(v2019.3))
@@ -54,7 +54,7 @@ mean(as.numeric(v2020.3))-mean(as.numeric(v2019.3))
 #코로나 전후 1인가구의 음식/숙박 소비지출 변화 비교 분석/시각화
 mat4<-rbind(v2019.4,v2020.4)
 mat4<-as.numeric(mat4)
-barplot(mat4, beside=T,col=rainbow(2), names=names )
+barplot(mat4, beside=T,col=rainbow(2), names=names , main="코로나 전후 1인가구 음식/숙박 소비지출 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mean(as.numeric(v2020.4))-mean(as.numeric(v2019.4))
