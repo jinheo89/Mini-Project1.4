@@ -37,20 +37,20 @@ v2020.7<-as.vector(as.matrix(data6[36,28:52]))
 #코로나 전후 1인가구 지출액 기준 온라인 가공식품 비교 분석/시각화
 #colname 확인
 c(data6[1,c(3:27)])
-names1<-c("육류가공품","육류가공품","알가공품","알가공품","조미수산가공품","조미수산가공품","건조수산가공품","건조수산가공품",
-         "과일가공품","과일가공품","김치류","김치류","절임류","절임류","드레싱/소스류","드레싱/소스류","장류","장류","유지류","유지류")
-         
-names2<-c("유가공품","유가공품","빵/떡","빵/떡","과자","과자","초콜릿/코코아제품","초콜릿/코코아제품","간편식","간편식",
-         "면류","면류","연식품","연식품","전분/분말류","전분/분말류","당류","당류","조미식품","조미식품","커피류","커피류",
-         "다류","다류","음료류","음료류","주류","주류","건강기능식품","건강기능식품")
+names1<-rep(c("육류가공품","알가공품","조미수산가공품","건조수산가공품",
+         "과일가공품","김치류","절임류","드레싱/소스류","장류","유지류"), each=2)
+        
+names2<-rep(c("유가공품","빵/떡","과자","초콜릿/코코아제품","간편식",
+         "면류","연식품","전분/분말류","당류","조미식품","커피류",
+         "다류","음료류","주류","건강기능식품"),each=2)
 mat1.1<-rbind(v2019.1[1:10],v2020.1[1:10])
 mat1.1<-as.numeric(mat1.1)
-barplot(mat1.1, beside=T,col=rainbow(2), names=names1 )
+barplot(mat1.1, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 1인가구 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat1.2<-rbind(v2019.1[11:25],v2020.1[11:25])
 mat1.2<-as.numeric(mat1.2)
-barplot(mat1.2, beside=T,col=rainbow(2), names=names2 )
+barplot(mat1.2, beside=T,col=rainbow(2), names=names2 ,main="코로나 전후 1인가구 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용:  1인가구는 육류가공품, 알가공품, 조미수산가공품, 건조수산가공품 등의 온라인 가공식품에 코로나 이후 지출액 비중이 증가했다.
@@ -60,12 +60,12 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #200만원 미만
 mat2.1<-rbind(v2019.2[1:10],v2020.2[1:10])
 mat2.1<-as.numeric(mat2.1)
-barplot(mat2.1, beside=T,col=rainbow(2), names=names1 )
+barplot(mat2.1, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 소득 200만원 미만인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat2.2<-rbind(v2019.2[11:25],v2020.2[11:25])
 mat2.2<-as.numeric(mat2.2)
-barplot(mat2.2, beside=T,col=rainbow(2), names=names2 )
+barplot(mat2.2, beside=T,col=rainbow(2), names=names2 ,main="코로나 전후 소득 200만원 미만인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 소득범위 200만원 미만인 경우 알가공품, 조미수산가공품, 과일가공품, 절임류 등의 온라인 가공식품에 코로나 이후 지출액 비중이 증가했다.
@@ -74,12 +74,12 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #200~300만원 미만
 mat3.1<-rbind(v2019.3[1:10],v2020.3[1:10])
 mat3.1<-as.numeric(mat2.1)
-barplot(mat3.1, beside=T,col=rainbow(2), names=names1 )
+barplot(mat3.1, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 소득 200~300만원인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat3.2<-rbind(v2019.3[11:25],v2020.3[11:25])
 mat3.2<-as.numeric(mat3.2)
-barplot(mat3.2, beside=T,col=rainbow(2), names=names2 )
+barplot(mat3.2, beside=T,col=rainbow(2), names=names2 ,main="코로나 전후 소득 200~300만원인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 소득범위 200~300만원 미만인 경우 알가공품, 조미수산가공품, 과일가공품, 절임류 등의 온라인 가공식품에 코로나 이후 지출액 비중이 증가했다.
@@ -88,12 +88,12 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #300~400만원 미만
 mat4.1<-rbind(v2019.4[1:10],v2020.4[1:10])
 mat4.1<-as.numeric(mat4.1)
-barplot(mat4.1, beside=T,col=rainbow(2), names=names1 )
+barplot(mat4.1, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 소득 300~400만원인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat4.2<-rbind(v2019.4[11:25],v2020.4[11:25])
 mat4.2<-as.numeric(mat4.2)
-barplot(mat4.2, beside=T,col=rainbow(2), names=names2 )
+barplot(mat4.2, beside=T,col=rainbow(2), names=names2 ,main="코로나 전후 소득 300~400만원인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 소득범위 300~400만원 미만인 경우 육류가공품, 조미수산가공품, 건조수산가공품, 유지류 등의 온라인 가공식품에 코로나 이후 지출액 비중이 증가했다.
@@ -102,12 +102,12 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #400~500만원 미만
 mat5.1<-rbind(v2019.5[1:10],v2020.5[1:10])
 mat5.1<-as.numeric(mat5.1)
-barplot(mat5.1, beside=T,col=rainbow(2), names=names1 )
+barplot(mat5.1, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 소득 400~500만원인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat5.2<-rbind(v2019.5[11:25],v2020.5[11:25])
 mat5.2<-as.numeric(mat5.2)
-barplot(mat5.2, beside=T,col=rainbow(2), names=names2 )
+barplot(mat5.2, beside=T,col=rainbow(2), names=names2 ,main="코로나 전후 소득 400~500만원인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 소득범위 400~500만원 미만인 경우 육류가공품, 조미수산가공품, 건조수산가공품, 김치류, 유지류 등의 온라인 가공식품에 코로나 이후 지출액 비중이 증가했다.
@@ -117,12 +117,12 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #500~600만원 미만
 mat6.1<-rbind(v2019.6[1:10],v2020.6[1:10])
 mat6.1<-as.numeric(mat6.1)
-barplot(mat6.1, beside=T,col=rainbow(2), names=names1 )
+barplot(mat6.1, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 소득 500~600만원인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat6.2<-rbind(v2019.6[11:25],v2020.6[11:25])
 mat6.2<-as.numeric(mat6.2)
-barplot(mat6.2, beside=T,col=rainbow(2), names=names2 )
+barplot(mat6.2, beside=T,col=rainbow(2), names=names2 ,main="코로나 전후 소득 500~600만원인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 소득범위 500~600만원 미만인 경우 육류가공품, 조미수산가공품, 장류 등의 온라인 가공식품에 코로나 이후 지출액 비중이 증가 했다.
@@ -131,13 +131,23 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #600만원 이상
 mat7.1<-rbind(v2019.7[1:10],v2020.7[1:10])
 mat7.1<-as.numeric(mat7.1)
-barplot(mat7.1, beside=T,col=rainbow(2), names=names1 )
+barplot(mat7.1, beside=T,col=rainbow(2), names=names1 ,main="코로나 전후 소득 600만원 이상인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mat7.2<-rbind(v2019.7[11:25],v2020.7[11:25])
 mat7.2<-as.numeric(mat7.2)
-barplot(mat7.2, beside=T,col=rainbow(2), names=names2 )
+barplot(mat7.2, beside=T,col=rainbow(2), names=names2 ,main="코로나 전후 소득 600만원 이상인경우 온라인 가공식품 지출액 비중 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 #분석내용: 소득범위 600만원 이상인 경우 육류가공품, 조미수산가공품, 절임류등의 온라인 가공식품에 코로나 이후 지출액 비중이 증가했다.
 #소득범위 600만원 이상인 경우 유가공품, 빵/떡, 과자, 초콜릿/코코아제품, 간편식, 면류, 전분/분말류, 조미식품, 음료류 등의 온라인 가공식품에 코라나 이후 지출액 비중이 증가했다.
+
+
+#종합분석 및 분석결과 활용:
+#1인가구는 육류가공품, 알가공품, 조미수산가공품, 건조수산가공품, 빵/떡,과자, 간편식, 면류등의 온라인 가공식품에 코로나 이후 지출액 비중이 증가했다.
+#따라서 해당 항목에 대해 1인가구를 위해 상품추천을 하면 적절할 것이다.
+#또한 소득별로 세부항목에대한 지출액 비중의 변화가 차이가 있으므로 소득에 맞추어 상품추천 서비스를 제공하는것도 가능할 것이다.
+#앞서 분석한 1인가구의 평균 소득인 230만원을 기준으로 상품추천을 한다면 소득 200~300만원인 경우의 온라인 가공식품 지출액 비중 증가 품목을 추천해주는것도
+#적절한 방법이 될것이다.
+#산업체 프로젝트 단계에서 회원가입정보에 소득을 추가하여 소득별로 맞춤형 상품추천 서비스를 제공할수도 있을것이다.
+
