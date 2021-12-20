@@ -95,7 +95,7 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #600만원 이상
 mat7<-rbind(v2019.7,v2020.7)
 mat7<-as.numeric(mat7)
-barplot(mat7, beside=T,col=rainbow(2), names=names ,main="소득 200만원 이상인경우 코로나 전후 온라인 가공식품 구입변화 비교")
+barplot(mat7, beside=T,col=rainbow(2), names=names ,main="소득 600만원 이상인경우 코로나 전후 온라인 가공식품 구입변화 비교")
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #분석내용: 600만원 이상의 소득범위에서는 코로나 이후 온라인 가공식품 구입은 약간 증가했다.
 
