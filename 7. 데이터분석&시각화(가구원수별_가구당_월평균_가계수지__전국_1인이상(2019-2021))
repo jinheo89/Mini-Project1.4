@@ -26,7 +26,7 @@ v2020.4<-as.vector(as.matrix(data1[53,c(15,18,21,24)]))
 mat1<-rbind(v2019.1,v2020.1)
 mat1<-as.numeric(mat1)
 #colname설정
-names<-c("1/4분기","1/4분기","2/4분기","2/4분기","3/4분기","3/4분기","4/4분기","4/4분기")
+names<-rep(c("1/4분기","2/4분기","3/4분기","4/4분기"), each=2)
 barplot(mat1, beside=T,col=rainbow(2), names=names )
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
@@ -35,6 +35,7 @@ mean(as.numeric(v2020.1))-mean(as.numeric(v2019.1))
 
 #코로나 전후 1인가구 식료품/비주류음료 소비지출 변화 비교 분석/시각화
 mat2<-rbind(v2019.2,v2020.2)
+mat2<-as.numeric(mat2)
 barplot(mat2, beside=T,col=rainbow(2), names=names )
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
@@ -43,14 +44,16 @@ mean(as.numeric(v2020.2))-mean(as.numeric(v2019.2))
 
 #코로나 전후 1인가구 주류/담배 소비지출 변화 비교 분석/시각화
 mat3<-rbind(v2019.3,v2020.3)
+mat3<-as.numeric(mat3)
 barplot(mat3, beside=T,col=rainbow(2), names=names )
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
 mean(as.numeric(v2020.3))-mean(as.numeric(v2019.3))
 #분석내용: 코로나 전후 1인가구 주류/담배 소비지출은 연평균(-811원) 감소했다.
 
-#코로나 전후 1인가구의 음식/숙박 소비지출 변화 비교교 분석/시각화
+#코로나 전후 1인가구의 음식/숙박 소비지출 변화 비교 분석/시각화
 mat4<-rbind(v2019.4,v2020.4)
+mat4<-as.numeric(mat4)
 barplot(mat4, beside=T,col=rainbow(2), names=names )
 legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 
@@ -83,4 +86,8 @@ legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
 #분석내용: 코로나전후와 비교해서 식료품,비주류음료의 소비지출은 증가했으며,
 #음식,숙박에대한 소비지출은 감소하였다.
 
-
+#종합분석:
+#1인가구의 소득은 코로나 전후 크게 차이가 없었고, 식료품/비주류음료에 대한 평균 소비지출은 소폭 증가했다(16,462원).
+#이는 물가상승이 반영된 결과라고 생각된다.
+#1인가구의 소비지출 중 음식/숙박에대한 평균 지출은 소폭 감소했다(-7,638원).
+#(숙박이 포함되어 있으므로 음식에대한 소비지출 증가여부는 알 수 없다.)
