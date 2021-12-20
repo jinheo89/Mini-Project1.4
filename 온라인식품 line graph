@@ -11,39 +11,38 @@ library(dplyr)
 product_all <- product %>% filter(범위별=='계') # indexing 
 product_all <- product_all[,-2]
 
-#prod_2019 <- product_all[,c(1:13)]
+prod_2019 <- product_all[,c(1:13)]
 prod_2020 <- product_all[,c(1,14:25)]
 prod_2021 <- product_all[,c(1,26:ncol(product_all))]
 
 
 library(tidyverse) 
                                         # convert column values into row names 
-#prod_2019 <- prod_2019 %>% remove_rownames %>% column_to_rownames(var='상품군별')
+prod_2019 <- prod_2019 %>% remove_rownames %>% column_to_rownames(var='상품군별')
 prod_2020 <- prod_2020 %>% remove_rownames %>% column_to_rownames(var='상품군별')
 prod_2021 <- prod_2021 %>% remove_rownames %>% column_to_rownames(var='상품군별')
 
 
 
 # remove others except for top 3 variables
-
-prod_2020 <- prod_2020[c(1,13,14,22),] # 합계, 음식료품, 음식서비스, 농축수산물
+prod_2019 <- prod_2019[c(1,13,14,22),] # 합계, 음식료품, 음식서비스, 농축수산물
+prod_2020 <- prod_2020[c(1,13,14,22),]
 prod_2021 <- prod_2021[c(1,13,14,22),]
 
 
 
-# t_prod_2019 <- as.data.frame(t(prod_2019))
-# year1 <- rep('2019',times=12)
-# t_prod_2019$year <- cbind(var2=year1)
-# month1 <- 1:12
-# t_prod_2019$month <- cbind(var1=month1)  
+t_prod_2019 <- as.data.frame(t(prod_2019)) # add month & year column
+year1 <- rep('2019',times=12)
+t_prod_2019$year <- cbind(var2=year1)
+month1 <- 1:12
+t_prod_2019$month <- cbind(var1=month1)
 
 
 t_prod_2020 <- as.data.frame(t(prod_2020))
 year1 <- rep('2020',times=12)
 t_prod_2020$year <- cbind(var2=year1)
 month1 <- 1:12
-t_prod_2020$month <- cbind(var1=month1)  # add month & year column
-
+t_prod_2020$month <- cbind(var1=month1)  
 
 t_prod_2021 <- as.data.frame(t(prod_2021))
 year1 <- rep('2021',times=10)
@@ -55,17 +54,23 @@ t_prod_2021$month <- cbind(var1=month1)
 
 
 # mean of column
+t_prod_2019$합계평균 <- t_prod_2019$합계/20 
 t_prod_2020$합계평균 <- t_prod_2020$합계/20 
 t_prod_2021$합계평균 <- t_prod_2021$합계/20
 
+t_prod_2019 <- t_prod_2019[,-1]
+t_prod_2019 <- t_prod_2019[,c(6,1,2,3,4,5)] # switch column positions
 t_prod_2020 <- t_prod_2020[,-1]
-t_prod_2020 <- t_prod_2020[,c(6,1,2,3,4,5)] # switch column positions
-
+t_prod_2020 <- t_prod_2020[,c(6,1,2,3,4,5)]
 t_prod_2021 <- t_prod_2021[,-1]
 t_prod_2021 <- t_prod_2021[,c(6,1,2,3,4,5)]
 
 
 # convert to longer data frame
+
+
+longer_2019 <- t_prod_2019 %>%
+  pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')
 
 longer_2020 <- t_prod_2020 %>%
   pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')
@@ -76,14 +81,25 @@ longer_2021 <- t_prod_2021 %>%
 
 
 
-## plotting 
+## 코로나 전후 비교 
 
+
+
+############ plotting 
 
 library(grid)
 library(gridExtra)
 
+a <- t_prod_2019 %>%
+  pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')%>%
+  ggplot(aes(x=month,y=revenue,color=product))+
+  geom_line(size=1)+
+  geom_point(size=2.5) +
+  geom_point(shape=23,color='#FFFFFF',size=2.5) +
+  xlab('2019년') + ylab('거래액') + labs(color='상품군') +
+  scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))+ theme_classic() 
 
-a <- t_prod_2020 %>%
+b <- t_prod_2020 %>%
   pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')%>%
   ggplot(aes(x=month,y=revenue,color=product))+
   geom_line(size=1)+
@@ -92,7 +108,7 @@ a <- t_prod_2020 %>%
   xlab('2020년') + ylab('거래액') + labs(color='상품군') +
   scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))+ theme_classic() 
 
-b <- t_prod_2021 %>%
+c <- t_prod_2021 %>%
   pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')%>%
   ggplot(aes(x=month,y=revenue,color=product))+
   geom_line(size=1)+
@@ -101,7 +117,9 @@ b <- t_prod_2021 %>%
   xlab('2021년') + ylab('거래액') + labs(color='상품군') +
   scale_x_continuous(breaks=seq(1,10,1),limits=c(1,10))+ theme_classic() 
 
-grid.arrange(a,b,nrow=1,ncol=2,
+grid.arrange(a,b,c,nrow=1,ncol=3,
              top=textGrob('온라인 쇼핑몰 상품군별 거래액', gp=gpar(fontsize=18, font=4)))
+
+
 
 
