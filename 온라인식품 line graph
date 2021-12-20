@@ -82,24 +82,26 @@ longer_2021 <- t_prod_2021 %>%
 library(grid)
 library(gridExtra)
 
+
 a <- t_prod_2020 %>%
   pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')%>%
   ggplot(aes(x=month,y=revenue,color=product))+
   geom_line(size=1)+
   geom_point(size=2.5) +
-  geom_point(color='#FFFFFF',size=2.5) +
+  geom_point(shape=23,color='#FFFFFF',size=2.5) +
   xlab('2020년') + ylab('거래액') + labs(color='상품군') +
-  scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))
+  scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))+ theme_classic() 
 
 b <- t_prod_2021 %>%
   pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')%>%
   ggplot(aes(x=month,y=revenue,color=product))+
   geom_line(size=1)+
   geom_point(size=2.5) +
-  geom_point(color='#FFFFFF',size=2.5) +
+  geom_point(shape=23,color='#FFFFFF',size=2.5) +
   xlab('2021년') + ylab('거래액') + labs(color='상품군') +
-  scale_x_continuous(breaks=seq(1,10,1),limits=c(1,10))
-  
+  scale_x_continuous(breaks=seq(1,10,1),limits=c(1,10))+ theme_classic() 
+
 grid.arrange(a,b,nrow=1,ncol=2,
              top=textGrob('온라인 쇼핑몰 상품군별 거래액', gp=gpar(fontsize=18, font=4)))
+
 
