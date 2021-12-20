@@ -1,0 +1,101 @@
+# 탐색적 자료 분석(코로나 확진자수 온라인식품 거래액 상관분석)
+
+
+setwd('C:/Users/gpfl9/Desktop/bigdata_analysis/mini_project4')
+product <- read.csv('온라인쇼핑몰_취급상품범위별_상품군별거래액(2019-2021).csv',header=T)
+
+
+## transform table 
+
+library(dplyr)
+product_all <- product %>% filter(범위별=='계') # indexing 
+product_all <- product_all[,-2]
+
+#prod_2019 <- product_all[,c(1:13)]
+prod_2020 <- product_all[,c(1,14:25)]
+prod_2021 <- product_all[,c(1,26:ncol(product_all))]
+
+
+library(tidyverse) 
+                                        # convert column values into row names 
+#prod_2019 <- prod_2019 %>% remove_rownames %>% column_to_rownames(var='상품군별')
+prod_2020 <- prod_2020 %>% remove_rownames %>% column_to_rownames(var='상품군별')
+prod_2021 <- prod_2021 %>% remove_rownames %>% column_to_rownames(var='상품군별')
+
+
+
+# remove others except for top 3 variables
+
+prod_2020 <- prod_2020[c(1,13,14,22),] # 합계, 음식료품, 음식서비스, 농축수산물
+prod_2021 <- prod_2021[c(1,13,14,22),]
+
+
+
+# t_prod_2019 <- as.data.frame(t(prod_2019))
+# year1 <- rep('2019',times=12)
+# t_prod_2019$year <- cbind(var2=year1)
+# month1 <- 1:12
+# t_prod_2019$month <- cbind(var1=month1)  
+
+
+t_prod_2020 <- as.data.frame(t(prod_2020))
+year1 <- rep('2020',times=12)
+t_prod_2020$year <- cbind(var2=year1)
+month1 <- 1:12
+t_prod_2020$month <- cbind(var1=month1)  # add month & year column
+
+
+t_prod_2021 <- as.data.frame(t(prod_2021))
+year1 <- rep('2021',times=10)
+t_prod_2021$year <- cbind(var2=year1)
+month1 <- 1:10
+t_prod_2021$month <- cbind(var1=month1)
+
+
+
+
+# mean of column
+t_prod_2020$합계평균 <- t_prod_2020$합계/20 
+t_prod_2021$합계평균 <- t_prod_2021$합계/20
+
+t_prod_2020 <- t_prod_2020[,-1]
+t_prod_2020 <- t_prod_2020[,c(6,1,2,3,4,5)] # switch column positions
+
+t_prod_2021 <- t_prod_2021[,-1]
+t_prod_2021 <- t_prod_2021[,c(6,1,2,3,4,5)]
+
+
+# convert to longer data frame
+
+longer_2020 <- t_prod_2020 %>%
+  pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')
+
+longer_2021 <- t_prod_2021 %>%
+  pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')
+
+
+
+
+## plotting 
+
+
+library(gridExtra)
+
+a <- t_prod_2020 %>%
+  pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')%>%
+  ggplot(aes(x=month,y=revenue,color=product))+
+  geom_line(size=1)+
+  geom_point(size=2.5) +
+  geom_point(color='#FFFFFF',size=2.5) +
+  scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))
+
+b <- t_prod_2021 %>%
+  pivot_longer('합계평균':'음식서비스',names_to='product', values_to='revenue')%>%
+  ggplot(aes(x=month,y=revenue,color=product))+
+  geom_line(size=1)+
+  geom_point(size=2.5) +
+  geom_point(color='#FFFFFF',size=2.5) +
+  scale_x_continuous(breaks=seq(1,12,1),limits=c(1,12))
+
+grid.arrange(a,b,nrow=1,ncol=2)
+
