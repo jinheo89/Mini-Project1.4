@@ -129,5 +129,5 @@ ggpairs(c_prod_all, columns=1:5, ggplot2::aes(colour=year),
   scale_fill_nord('aurora')+
   theme_minimal()
 
-ggpairs(c_prod_2021)
+# ggpairs(c_prod_2021)
 
