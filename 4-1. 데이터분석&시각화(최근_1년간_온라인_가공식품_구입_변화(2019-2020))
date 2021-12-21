@@ -1,0 +1,171 @@
+## spliting corona
+
+
+# 2월 29일 / 8월 27일 / 12월 25일 /7월 6일 
+
+## corona-product cor-analysis
+
+setwd('C:/Users/gpfl9/Desktop/bigdata_analysis/mini_project4')
+product <- read.csv('온라인쇼핑몰_취급상품범위별_상품군별거래액(2019-2021).csv',header=T)
+
+
+######################################################### (making 't_prod_2020' & 't_prod_2021' .csv files) 
+
+
+## transform table 
+
+library(dplyr)
+product_all <- product %>% filter(범위별=='계') # indexing 
+product_all <- product_all[,-2]
+
+prod_2019 <- product_all[,c(1:13)]
+prod_2020 <- product_all[,c(1,14:25)]
+prod_2021 <- product_all[,c(1,26:ncol(product_all))]
+
+
+library(tidyverse) 
+                                        # convert column values into row names 
+prod_2019 <- prod_2019 %>% remove_rownames %>% column_to_rownames(var='상품군별')
+prod_2020 <- prod_2020 %>% remove_rownames %>% column_to_rownames(var='상품군별')
+prod_2021 <- prod_2021 %>% remove_rownames %>% column_to_rownames(var='상품군별')
+
+
+
+# remove others except for top 3 variables
+prod_2019 <- prod_2019[c(1,13,14,22),] # 합계, 음식료품, 음식서비스, 농축수산물
+prod_2020 <- prod_2020[c(1,13,14,22),]
+prod_2021 <- prod_2021[c(1,13,14,22),]
+
+
+
+t_prod_2019 <- as.data.frame(t(prod_2019)) # add month & year column
+year1 <- rep('2019',times=12)
+t_prod_2019$year <- cbind(var2=year1)
+month1 <- 1:12
+t_prod_2019$month <- cbind(var1=month1)
+
+
+t_prod_2020 <- as.data.frame(t(prod_2020))
+year1 <- rep('2020',times=12)
+t_prod_2020$year <- cbind(var2=year1)
+month1 <- 1:12
+t_prod_2020$month <- cbind(var1=month1)  
+
+t_prod_2021 <- as.data.frame(t(prod_2021))
+year1 <- rep('2021',times=10)
+t_prod_2021$year <- cbind(var2=year1)
+month1 <- 1:10
+t_prod_2021$month <- cbind(var1=month1)
+
+
+
+
+# mean of column
+t_prod_2019$합계평균 <- t_prod_2019$합계/20 
+t_prod_2020$합계평균 <- t_prod_2020$합계/20 
+t_prod_2021$합계평균 <- t_prod_2021$합계/20
+
+t_prod_2019 <- t_prod_2019[,-1]
+t_prod_2019 <- t_prod_2019[,c(6,1,2,3,4,5)] # switch column positions
+t_prod_2020 <- t_prod_2020[,-1]
+t_prod_2020 <- t_prod_2020[,c(6,1,2,3,4,5)]
+t_prod_2021 <- t_prod_2021[,-1]
+t_prod_2021 <- t_prod_2021[,c(6,1,2,3,4,5)]
+
+
+write.csv(t_prod_2019,'t_prod_2019.csv')
+write.csv(t_prod_2020,'t_prod_2020.csv')
+write.csv(t_prod_2021,'t_prod_2021.csv')
+
+
+#########################################################
+
+t_prod_2020 <- read.csv('t_prod_2020.csv')
+t_prod_2021 <- read.csv('t_prod_2021.csv')
+
+t_prod_2020 <- t_prod_2020[,-1]
+t_prod_2021 <- t_prod_2021[,-1]
+
+
+corona <- c(0.9166667,121.1724138,205.1935484,29.5666667,24.3000000,44.9000000,
+                 47.9354839,188.5483871,123.5666667,88.6129032,267.1666667,874.2903226)
+month <- c(1,2,3,4,5,6,7,8,9,10,11,12)
+corona_2020 <- data.frame(corona, month)
+
+corona <- c(540.2903,411.3214,439.0645,633.4333,585.9032,564.1667,
+               1356.6129,1731.0000,2010.7667,1697.4839)
+corona_2021 <- data.frame(corona, month)
+
+
+# 3월, 9월, 12월, 7월
+
+corona <- c(0.9166667,121.1724138,205.1935484,29.5666667,24.3000000,44.9000000,
+            47.9354839,188.5483871,123.5666667,88.6129032,267.1666667,874.2903226)
+month <- c(1,2,3,4,5,6,7,8,9,10,11,12)
+corona_2020 <- data.frame(corona, month)
+corona_2020_t <- corona_2020[c(3,9,12),]
+
+prod_2020_t <- t_prod_2020[c(3,9,12),]
+
+
+all_period_prod <- rbind(t_prod_2020,t_prod_2021)
+pandemic_prod <- all_period_prod[c(3,9,12,19),]
+
+all_period_corn <- rbind(corona_2020,corona_2021)
+pandemic_corn <- all_period_corn[c(3,9,12,19),]  
+
+cor(t_prod_2020, corona_2020)
+
+#              corona     month
+# 합계평균   0.7940986 0.9159466
+# 음.식료품  0.6944005 0.7565930
+# 농축수산물 0.5476655 0.5116103
+# 음식서비스 0.8468817 0.8920578
+# year              NA        NA
+# month      0.5887031 1.0000000
+
+
+cor(prod_2020_t, corona_2020_t) # 3rd (2020)
+
+#              corona     month
+# 합계평균   0.88102360 0.9491726
+# 음.식료품  0.37167504 0.9297698
+# 농축수산물 0.01715859 0.7380218
+# 음식서비스 0.88897081 0.9436612
+# year               NA        NA
+# month      0.68734098 1.0000000
+
+
+
+cor(pandemic_prod,pandemic_corn) # month: 3,9,12,19
+
+#               corona      month
+# 합계평균    0.33975153  0.6688269
+# 음.식료품   0.09850038  0.7762180
+# 농축수산물  0.05421026  0.7400644
+# 음식서비스  0.27911432  0.6107640
+# year       -0.46478840 -0.1324532
+# month       0.66478731  1.0000000
+
+
+
+c_prod_2020 <- t_prod_2020[,-c(5,6)]
+cor(c_prod_2020)
+# 합계평균  음·식료품 농축수산물  음식서비스 corona_2020
+# 합계평균    1.0000000  0.8093439  0.5993221  0.9330253   0.7940986
+# 음·식료품  0.8093439  1.0000000  0.9297845  0.8326552   0.6944005
+# 농축수산물  0.5993221  0.9297845  1.0000000  0.6366604   0.5476655
+# 음식서비스  0.9330253  0.8326552  0.6366604  1.0000000   0.8468817
+# corona_2020 0.7940986  0.6944005  0.5476655  0.8468817   1.0000000
+
+c_prod_2021 <- t_prod_2021[,-c(5,6)]
+cor(c_prod_2021)
+# 합계평균 음·식료품 농축수산물 음식서비스 corona_2021
+# 합계평균     1.0000000  0.4033817 -0.1238698  0.7016649   0.6169269
+# 음·식료품   0.4033817  1.0000000  0.7638137  0.6033798   0.6571880
+# 농축수산물  -0.1238698  0.7638137  1.0000000  0.1019419   0.4114138
+# 음식서비스   0.7016649  0.6033798  0.1019419  1.0000000   0.8120921
+# corona_2021  0.6169269  0.6571880  0.4114138  0.8120921   1.0000000
+
+
+
