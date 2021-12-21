@@ -66,6 +66,10 @@ t_prod_2021 <- t_prod_2021[,-1]
 t_prod_2021 <- t_prod_2021[,c(6,1,2,3,4,5)]
 
 
+write.csv(t_prod_2019,'t_prod_2019.csv')
+write.csv(t_prod_2019,'t_prod_2020.csv')
+write.csv(t_prod_2019,'t_prod_2021.csv')
+
 
 ################################ correlation analysis #########################
 
