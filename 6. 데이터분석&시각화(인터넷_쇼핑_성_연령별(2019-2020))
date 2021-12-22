@@ -14,53 +14,94 @@ v2020.1<-data5[c(12:17),9]
 #2020년 20대~70대 남성
 v2020.2<-data5[c(20:25),9]
 
-#성별비교
-mat1.1<-rbind(v2019.1, v2019.2)
-names<-rep(c("20대","30대","40대","50대","60대","70대"), each=2)
-barplot(as.numeric(mat1.1), beside=T,col=rainbow(2), names=names, main="인터넷쇼핑이용자비율(%)")
-legend("topright", legend=c("2019 여성","2019 남성"), fill=rainbow(2), cex=0.6)
+v2019.1<-as.numeric(v2019.1)/100
+v2019.2<-as.numeric(v2019.2)/100
+v2020.1<-as.numeric(v2020.1)/100
+v2020.2<-as.numeric(v2020.2)/100
 
-mat1.2<-rbind(v2020.1,v2020.2)
-barplot(as.numeric(mat1.2), beside=T,col=rainbow(2), names=names, main="인터넷쇼핑이용자비율(%)")
-legend("topright", legend=c("2020 여성","2020 남성"), fill=rainbow(2), cex=0.6)
+#성별비교
+df1<-rbind(t(v2019.1),t(v2019.2))
+df1<-data.frame(df1)
+Group<-rbind("2019년 여성","2019년 남성")
+df1<-cbind(Group,df1)
+colnames(df1)<-c("Group","20대","30대","40대","50대","60대","70대")
+#install.packages("devtools")
+#devtools::install_github("ricardo-bion/ggradar")
+#install.packages("gridExtra")
+library(ggplot2)
+library(ggradar)
+library(gridExtra)
+p1<-ggradar(df1)+labs(title="인터넷 쇼핑 성별 이용자 비율")
+
+df2<-rbind(t(v2020.1),t(v2020.2))
+df2<-data.frame(df2)
+Group<-rbind("2020년 여성","2020년 남성")
+df2<-cbind(Group, df2)
+colnames(df2)<-c("Group","20대","30대","40대","50대","60대","70대")
+
+p2<-ggradar(df2)+labs(title="인터넷 쇼핑 성별 이용자 비율")
+grid.arrange(p1,p2,ncol=2)
 
 #분석결과: 20~30대 층은 성별에 상관없이 높은 인터넷 쇼핑 비율을 보이고, 40~50대 구간에서는 여성층인경우 인터넷쇼핑이용비율이 남성보다 더 높았다.
 #고령층은 60~70대 구간에서는 남성층의 인터넷쇼핑이용비율이 약간 높았다.
 #이를 통해 1인 가구 비중은 70대 이상(18.6%)이 가장 많고, 이어 60대(17.7%), 50대(17.2%), 30대(16.5%), 20대(15.7%), 40대(13.9%), 10대 이하(0.4%) 순임을 고려하면
 #1인가구 상품서비스 추천시 20-30대를 우선으로 그리고 40-50대를 주요 대상으로 하면 적절할 것이다. 
-
-#연도비교
-mat2.1<-rbind(v2019.1,v2020.1)
-barplot(as.numeric(mat2.1), beside=T,col=rainbow(2), names=names, main="인터넷쇼핑이용자비율(%)")
-legend("topright", legend=c("2019 여성","2020 여성"), fill=rainbow(2), cex=0.6)
-
-mat2.2<-rbind(v2019.2,v2020.2)
-barplot(as.numeric(mat2.2), beside=T,col=rainbow(2), names=names, main="인터넷쇼핑이용자비율(%)")
-legend("topright", legend=c("2019 남성","2020 남성"), fill=rainbow(2), cex=0.6)
-
 #분석결과: 코로나 전후 인터넷쇼핑이용자비율을 비교해보면 남여공통으로 40-60대에서 이용비율이 증가했다.
 
 
-#인터넷 쇼핑 성별 구매빈도 비율
-#성별비교
+#연령별 인터넷 쇼핑 성별 구매빈도 비율
 #2019년 20대 여성
 v2019.3<-as.vector(as.matrix(data5[12,4:7]))
 #2020년 20대 여성
 v2020.3<-as.vector(as.matrix(data5[12,10:13]))
-
-mat3.1<-rbind(v2019.3,v2020.3)
-names<-rep(c("월평균 구매빈도 1회미만","월평균 구매빈도 1~2회미만","월평균 구매빈도 2~3회미만","월평균 구매빈도 3회이상"), each=2)
-barplot(as.numeric(mat3.1), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 20대 여성","2020 20대 여성"), fill=rainbow(2), cex=0.6)
-
 #2019년 20대 남성
 v2019.4<-as.vector(as.matrix(data5[20,4:7]))
 #2020년 20대 남성
 v2020.4<-as.vector(as.matrix(data5[20,10:13]))
 
-mat3.2<-rbind(v2019.4,v2020.4)
-barplot(as.numeric(mat3.2), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 20대 남성","2020 20대 남성"), fill=rainbow(2), cex=0.6)
+v2019.3<-as.numeric(v2019.3)
+v2020.3<-as.numeric(v2020.3)
+v2019.4<-as.numeric(v2019.4)
+v2020.4<-as.numeric(v2020.4)
+
+#piechart 시각화
+library(ggplot2)
+#install.packages("gridExtra")
+library(gridExtra)
+
+#코로나 전후 20대 여성
+names<-c("월평균 구매빈도 1회미만","월평균 구매빈도 1~2회미만","월평균 구매빈도 2~3회미만","월평균 구매빈도 3회이상")
+
+df1<-data.frame("purchase_frequency"=names,
+                "share"=v2019.3)
+
+p1<-ggplot(df1, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 20대 여성 온라인 쇼핑 구매빈도 비율")
+
+
+df2<-data.frame("purchase_frequency"=names,
+                "share"=v2020.3)
+
+p2<-ggplot(df2, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 20대 여성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
+
+#코로나 전후 20대 남성
+df3<-data.frame("purchase_frequency"=names,
+                "share"=v2019.4)
+
+p1<-ggplot(df3, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 20대 남성 온라인 쇼핑 구매빈도 비율")
+
+
+df4<-data.frame("purchase_frequency"=names,
+                "share"=v2020.4)
+
+p2<-ggplot(df4, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 20대 남성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
 
 #분석결과: 코로나 전후 인터넷 쇼핑 구매빈도 비교결과 20대 남여공통으로 월평균 구매빈도 3회 이상 증가한비율이 더 높아졌다. 
 
@@ -68,20 +109,50 @@ legend("topleft", legend=c("2019 20대 남성","2020 20대 남성"), fill=rainbo
 v2019.5<-as.vector(as.matrix(data5[13,4:7]))
 #2020년 30대 여성
 v2020.5<-as.vector(as.matrix(data5[13,10:13]))
-
-mat4.1<-rbind(v2019.5,v2020.5)
-barplot(as.numeric(mat4.1), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 30대 여성","2020 30대 여성"), fill=rainbow(2), cex=0.6)
-
 #2019년 30대 남성
 v2019.6<-as.vector(as.matrix(data5[21,4:7]))
 #2020년 30대 남성
 v2020.6<-as.vector(as.matrix(data5[21,10:13]))
 
-mat4.2<-rbind(v2019.6,v2020.6)
-barplot(as.numeric(mat4.2), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 30대 남성","2020 30대 남성"), fill=rainbow(2), cex=0.6)
+v2019.5<-as.numeric(v2019.5)
+v2020.5<-as.numeric(v2020.5)
+v2019.6<-as.numeric(v2019.6)
+v2020.6<-as.numeric(v2020.6)
 
+#코로나 전후 30대 여성
+names<-c("월평균 구매빈도 1회미만","월평균 구매빈도 1~2회미만","월평균 구매빈도 2~3회미만","월평균 구매빈도 3회이상")
+
+df5<-data.frame("purchase_frequency"=names,
+                "share"=v2019.5)
+
+p1<-ggplot(df5, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 30대 여성 온라인 쇼핑 구매빈도 비율")
+
+
+df6<-data.frame("purchase_frequency"=names,
+                "share"=v2020.5)
+
+p2<-ggplot(df6, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 30대 여성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
+
+#코로나 전후 30대 남성
+df7<-data.frame("purchase_frequency"=names,
+                "share"=v2019.6)
+
+p1<-ggplot(df7, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 30대 남성 온라인 쇼핑 구매빈도 비율")
+
+
+df8<-data.frame("purchase_frequency"=names,
+                "share"=v2020.6)
+
+p2<-ggplot(df8, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 30대 남성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
+ 
 #분석결과: 코로나 전후 인터넷 쇼핑 구매빈도 비교결과 30대 남여공통으로 월평균 구매빈도 3회 이상 증가한비율이 더 높아졌다. 
 
 
@@ -89,19 +160,49 @@ legend("topleft", legend=c("2019 30대 남성","2020 30대 남성"), fill=rainbo
 v2019.7<-as.vector(as.matrix(data5[14,4:7]))
 #2020년 40대 여성
 v2020.7<-as.vector(as.matrix(data5[14,10:13]))
-
-mat5.1<-rbind(v2019.7,v2020.7)
-barplot(as.numeric(mat5.1), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 40대 여성","2020 40대 여성"), fill=rainbow(2), cex=0.6)
-
 #2019년 40대 남성
 v2019.8<-as.vector(as.matrix(data5[22,4:7]))
 #2020년 40대 남성
 v2020.8<-as.vector(as.matrix(data5[22,10:13]))
 
-mat5.2<-rbind(v2019.8,v2020.8)
-barplot(as.numeric(mat5.2), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 40대 남성","2020 40대 남성"), fill=rainbow(2), cex=0.6)
+v2019.7<-as.numeric(v2019.7)
+v2020.7<-as.numeric(v2020.7)
+v2019.8<-as.numeric(v2019.8)
+v2020.8<-as.numeric(v2020.8)
+
+#코로나 전후 40대 여성
+names<-c("월평균 구매빈도 1회미만","월평균 구매빈도 1~2회미만","월평균 구매빈도 2~3회미만","월평균 구매빈도 3회이상")
+
+df9<-data.frame("purchase_frequency"=names,
+                "share"=v2019.7)
+
+p1<-ggplot(df9, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 40대 여성 온라인 쇼핑 구매빈도 비율")
+
+
+df10<-data.frame("purchase_frequency"=names,
+                "share"=v2020.7)
+
+p2<-ggplot(df10, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 40대 여성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
+
+#코로나 전후 40대 남성
+df11<-data.frame("purchase_frequency"=names,
+                "share"=v2019.8)
+
+p1<-ggplot(df11, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 40대 남성 온라인 쇼핑 구매빈도 비율")
+
+
+df12<-data.frame("purchase_frequency"=names,
+                "share"=v2020.8)
+
+p2<-ggplot(df12, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 40대 남성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
 
 #분석결과: 코로나 전후 인터넷 쇼핑 구매빈도 비교결과 40대 남여공통으로 월평균 구매빈도 3회 이상 증가한비율이 더 높아졌다. 
 
@@ -110,20 +211,49 @@ legend("topleft", legend=c("2019 40대 남성","2020 40대 남성"), fill=rainbo
 v2019.9<-as.vector(as.matrix(data5[15,4:7]))
 #2020년 50대 여성
 v2020.9<-as.vector(as.matrix(data5[15,10:13]))
-
-mat6.1<-rbind(v2019.9,v2020.9)
-barplot(as.numeric(mat6.1), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 50대 여성","2020 50대 여성"), fill=rainbow(2), cex=0.6)
-
-
 #2019년 50대 남성
 v2019.10<-as.vector(as.matrix(data5[23,4:7]))
 #2020년 50대 남성
 v2020.10<-as.vector(as.matrix(data5[23,10:13]))
 
-mat6.2<-rbind(v2019.10,v2020.10)
-barplot(as.numeric(mat6.2), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 50대 남성","2020 50대 남성"), fill=rainbow(2), cex=0.6)
+v2019.9<-as.numeric(v2019.9)
+v2020.9<-as.numeric(v2020.9)
+v2019.10<-as.numeric(v2019.10)
+v2020.10<-as.numeric(v2020.10)
+
+#코로나 전후 50대 여성
+names<-c("월평균 구매빈도 1회미만","월평균 구매빈도 1~2회미만","월평균 구매빈도 2~3회미만","월평균 구매빈도 3회이상")
+
+df13<-data.frame("purchase_frequency"=names,
+                "share"=v2019.9)
+
+p1<-ggplot(df13, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 50대 여성 온라인 쇼핑 구매빈도 비율")
+
+
+df14<-data.frame("purchase_frequency"=names,
+                 "share"=v2020.9)
+
+p2<-ggplot(df14, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 50대 여성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
+
+#코로나 전후 50대 남성
+df15<-data.frame("purchase_frequency"=names,
+                 "share"=v2019.10)
+
+p1<-ggplot(df15, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 50대 남성 온라인 쇼핑 구매빈도 비율")
+
+
+df16<-data.frame("purchase_frequency"=names,
+                 "share"=v2020.10)
+
+p2<-ggplot(df16, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 50대 남성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
 
 #분석결과: 코로나 전후 인터넷 쇼핑 구매빈도 비교결과 50대 남여공통으로 월평균 구매빈도 3회 이상 증가한비율이 더 높아졌다. 
 
@@ -132,20 +262,49 @@ legend("topleft", legend=c("2019 50대 남성","2020 50대 남성"), fill=rainbo
 v2019.11<-as.vector(as.matrix(data5[16,4:7]))
 #2020년 60대 여성
 v2020.11<-as.vector(as.matrix(data5[16,10:13]))
-
-mat7.1<-rbind(v2019.11,v2020.11)
-barplot(as.numeric(mat7.1), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 60대 여성","2020 60대 여성"), fill=rainbow(2), cex=0.6)
-
-
 #2019년 60대 남성
 v2019.12<-as.vector(as.matrix(data5[24,4:7]))
 #2020년 60대 남성
 v2020.12<-as.vector(as.matrix(data5[24,10:13]))
 
-mat7.2<-rbind(v2019.12,v2020.12)
-barplot(as.numeric(mat7.2), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 60대 남성","2020 60대 남성"), fill=rainbow(2), cex=0.6)
+v2019.11<-as.numeric(v2019.11)
+v2020.11<-as.numeric(v2020.11)
+v2019.12<-as.numeric(v2019.12)
+v2020.12<-as.numeric(v2020.12)
+
+#코로나 전후 60대 여성
+names<-c("월평균 구매빈도 1회미만","월평균 구매빈도 1~2회미만","월평균 구매빈도 2~3회미만","월평균 구매빈도 3회이상")
+
+df17<-data.frame("purchase_frequency"=names,
+                 "share"=v2019.11)
+
+p1<-ggplot(df13, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 60대 여성 온라인 쇼핑 구매빈도 비율")
+
+
+df18<-data.frame("purchase_frequency"=names,
+                 "share"=v2020.11)
+
+p2<-ggplot(df18, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 60대 여성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
+
+#코로나 전후 60대 남성
+df19<-data.frame("purchase_frequency"=names,
+                 "share"=v2019.12)
+
+p1<-ggplot(df19, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 60대 남성 온라인 쇼핑 구매빈도 비율")
+
+
+df20<-data.frame("purchase_frequency"=names,
+                 "share"=v2020.12)
+
+p2<-ggplot(df20, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 60대 남성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
 
 #분석결과: 코로나 전후 인터넷 쇼핑 구매빈도 비교결과 60대 남여공통으로 월평균 구매빈도 3회 이상 증가한비율이 더 높아졌다. 
 
@@ -154,19 +313,49 @@ legend("topleft", legend=c("2019 60대 남성","2020 60대 남성"), fill=rainbo
 v2019.13<-as.vector(as.matrix(data5[17,4:7]))
 #2020년 70대 여성
 v2020.13<-as.vector(as.matrix(data5[17,10:13]))
-
-mat8.1<-rbind(v2019.13,v2020.13)
-barplot(as.numeric(mat8.1), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 70대 여성","2020 70대 여성"), fill=rainbow(2), cex=0.6)
-
 #2019년 70대 남성
 v2019.14<-as.vector(as.matrix(data5[25,4:7]))
 #2020년 70대 남성
 v2020.14<-as.vector(as.matrix(data5[25,10:13]))
 
-mat8.2<-rbind(v2019.14,v2020.14)
-barplot(as.numeric(mat8.2), beside=T,col=rainbow(2), names=names, main="월평균 구매빈도")
-legend("topleft", legend=c("2019 70대 남성","2020 70대 남성"), fill=rainbow(2), cex=0.6)
+v2019.13<-as.numeric(v2019.13)
+v2020.13<-as.numeric(v2020.13)
+v2019.14<-as.numeric(v2019.14)
+v2020.14<-as.numeric(v2020.14)
+
+#코로나 전후 70대 여성
+names<-c("월평균 구매빈도 1회미만","월평균 구매빈도 1~2회미만","월평균 구매빈도 2~3회미만","월평균 구매빈도 3회이상")
+
+df21<-data.frame("purchase_frequency"=names,
+                 "share"=v2019.13)
+
+p1<-ggplot(df21, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 70대 여성 온라인 쇼핑 구매빈도 비율")
+
+
+df22<-data.frame("purchase_frequency"=names,
+                 "share"=v2020.13)
+
+p2<-ggplot(df22, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 70대 여성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
+
+#코로나 전후 70대 남성
+df23<-data.frame("purchase_frequency"=names,
+                 "share"=v2019.14)
+
+p1<-ggplot(df23, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  labs(title="2019년 70대 남성 온라인 쇼핑 구매빈도 비율")
+
+
+df24<-data.frame("purchase_frequency"=names,
+                 "share"=v2020.14)
+
+p2<-ggplot(df24, aes(x="", y=share, fill=purchase_frequency))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  labs(title="2020년 70대 남성 온라인 쇼핑 구매빈도 비율")
+
+grid.arrange(p1,p2,ncol=2)
 
 #분석결과: 코로나 전후 인터넷 쇼핑 구매빈도 비교결과 70대 남여공통으로 월평균 구매빈도 3회 이상 증가한비율이 더 높아졌다. 
 #다른 연령대보다 70대의 경우 남여공통으로 3회 이상 증가한 비율이 훨씬 높았다.
