@@ -171,4 +171,143 @@ cor(c_prod_2021)
 # corona_2021  0.6169269  0.6571880  0.4114138  0.8120921   1.0000000
 
 
+###########################
 
+
+## spliting corona
+
+
+
+# 2월 29일 / 8월 27일 / 12월 25일 /7월 6일 
+
+## corona-product cor-analysis
+
+setwd('C:/Users/gpfl9/Desktop/bigdata_analysis/mini_project4')
+product <- read.csv('온라인쇼핑몰_취급상품범위별_상품군별거래액(2019-2021).csv',header=T)
+
+
+t_prod_2020 <- read.csv('t_prod_2020.csv')
+t_prod_2021 <- read.csv('t_prod_2021.csv')
+
+t_prod_2020 <- t_prod_2020[,-1]
+t_prod_2021 <- t_prod_2021[,-1]
+
+
+corona <- c(0.9166667,121.1724138,205.1935484,29.5666667,24.3000000,44.9000000,
+              47.9354839,188.5483871,123.5666667,88.6129032,267.1666667,874.2903226)
+month <- c(1,2,3,4,5,6,7,8,9,10,11,12)
+corona_2020 <- data.frame(corona, month)
+
+corona <- c(540.2903,411.3214,439.0645,633.4333,585.9032,564.1667,
+              1356.6129,1731.0000,2010.7667,1697.4839)
+month <- c(1,2,3,4,5,6,7,8,9,10)
+corona_2021 <- data.frame(corona, month)
+
+
+
+#1차 유행기면 1~3월분, 
+#2차 유행기면 9~12월까지 
+#3차유행기면 1~6개월까지 
+#4차유행기면 7월~현재까지로 데이터 나누어서 상관분석해야 될것같습니다.
+# 3월, 9월, 12월, 7월
+
+all_period_prod <- rbind(t_prod_2020,t_prod_2021)
+all_period_corn <- rbind(corona_2020,corona_2021)
+
+
+first_p <- all_period_prod[c(1:3),-c(5,6)]
+second_p <- all_period_prod[c(9:12),-c(5,6)]
+third_p <- all_period_prod[c(13:18),-c(5,6)]
+fourth_p <- all_period_prod[c(19:22),-c(5,6)]
+
+#first_c <- all_period_corn[c(1:3),-c(2)]
+first_c <- all_period_corn[c(1:3),]
+second_c <- all_period_corn[c(9:12),-c(2)]
+third_c <- all_period_corn[c(13:18),-c(2)]
+fourth_c <- all_period_corn[c(19:22),-c(2)]
+
+
+#### correlation between production and corona 
+library(corrplot)
+library(Hmisc)
+
+table(first)
+first <- cor(first_p, first_c) #1~3월
+corrplot(first)
+cor.test(first_p, first_c)
+# 합계평균   0.3271590
+# 음.식료품  0.9440695
+# 농축수산물 0.4960785
+# 음식서비스 0.9711483
+cor(second_p, second_c) #9~12월
+# 합계평균   0.9271875
+# 음.식료품  0.5053078
+# 농축수산물 0.2498084
+# 음식서비스 0.9939355
+cor(third_p, third_c) #1~6월 
+# 합계평균    0.4143481
+# 음.식료품   0.3425763
+# 농축수산물 -0.2847423
+# 음식서비스  0.6432794
+cor(fourth_p, fourth_c) #7월~현재
+# 합계평균   -0.01530186
+# 음.식료품   0.74279310
+# 농축수산물  0.84401903
+# 음식서비스 -0.67902630
+
+
+#install.packages('corrgram')
+library(corrgram)
+
+corrgram(first)
+
+
+### all period removed specific months 
+#코로나 n차 유행기별 온라인 식품 거래액 비교 분석
+
+
+split_pd <- all_period_prod[c(1:3,9:12,13:18,19:22),] #1:3, 9:12, 13:18, 19:22
+split_pd <- split_pd[,-c(5,6)]
+
+split_cn <- all_period_corn[c(1:3,9:12,13:18,19:22),-2]
+
+cor(split_pd,split_cn)
+p <- cor(split_pd,split_cn)
+
+corrplot(p)
+
+
+year <- rep(c(2020,2021),each=12)
+year <- year[1:22]
+all_period_corn$year <- cbind(year=year)
+
+bind_all <- cbind(all_period_prod,all_period_corn)
+a <- cor(bind_all)
+corrplot(a,  method='square')
+
+
+
+
+
+corrplot(a,
+         method='color',
+         type='lower',
+         order='hclust',
+         addCoef.col='black',
+         tl.col='black',
+         tl.str=45,
+         dia=F)
+
+
+
+prod <- all_period_prod[,-c(5,6)]
+corona <- all_period_corn[,-c(2,3)]
+bind <- cbind(prod,corona)
+c <- cor(bind)
+corrplot(c,  method='color',
+         type='lower',
+         order='hclust',
+         addCoef.col='black',
+         tl.col='black',
+         tl.str=45,
+         dia=F)
