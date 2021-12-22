@@ -63,7 +63,7 @@ mean(as.numeric(v2020.4))-mean(as.numeric(v2019.4))
 
 #1인가구의 소비지출 변화 비교 분석
 #2019
-df1<-data1[c(43:54),c(3,6,9,12)]
+df1<-as.numeric(data1[c(43:54),c(3,6,9,12)])
 df1$X2019.1.4<-as.numeric(df1$X2019.1.4)
 df1$X2019.2.4<-as.numeric(df1$X2019.2.4)
 df1$X2019.3.4<-as.numeric(df1$X2019.3.4)
@@ -71,7 +71,7 @@ df1$X2019.4.4<-as.numeric(df1$X2019.4.4)
 df1$mean<-apply(df1,1,mean,na.rm=TRUE)
 df1
 #2020
-df2<-data1[c(43:54),c(15,18,21,24)]
+df2<-as.numeric(data1[c(43:54),c(15,18,21,24)])
 df2$X2020.1.4<-as.numeric(df2$X2020.1.4)
 df2$X2020.2.4<-as.numeric(df2$X2020.2.4)
 df2$X2020.3.4<-as.numeric(df2$X2020.3.4)
@@ -79,10 +79,25 @@ df2$X2020.4.4<-as.numeric(df2$X2020.4.4)
 df2$mean<-apply(df2,1,mean, na.rm=TRUE)
 df2
 
-mat5<-rbind(df1$mean,df2$mean)
+df3<-rbind(df1$mean/sum(df1$mean), df2$mean/sum(df2$mean))
+
+df3<-round(df3,2)*100
+df3<-data.frame(df3)
+rownames(df3)<-c("2019년","2020년")
+
 names<-as.character(data1[c(43:54),2])
-barplot(mat5, beside = T, col=rainbow(2), names=names )
-legend("topright", legend=c(2019,2020), fill=rainbow(2), cex=0.6)
+install.packages("fmsb")
+library(fmsb)
+library(ggplot2)
+
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4))
+data<-rbind(rep(20,12), rep(0,12),df3)
+colnames(data)<-names
+radarchart(data, title="코로나19 전후 1인가구 소비지출 변화 비교",
+           pfcol=colors_in)
+
+legend(x=1,y=1,legend=rownames(data[-c(1,2),]), bty="n", col=colors_in, pch=20, cex=1.2, pt.cex=3)
+
 #분석내용: 코로나전후와 비교해서 식료품,비주류음료의 소비지출은 증가했으며,
 #음식,숙박에대한 소비지출은 감소하였다.
 
