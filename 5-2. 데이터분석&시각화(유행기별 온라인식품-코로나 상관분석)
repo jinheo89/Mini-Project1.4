@@ -1,0 +1,92 @@
+## spliting corona
+
+
+
+# 2월 29일 / 8월 27일 / 12월 25일 /7월 6일 
+
+## corona-product cor-analysis
+
+setwd('C:/Users/gpfl9/Desktop/bigdata_analysis/mini_project4')
+product <- read.csv('온라인쇼핑몰_취급상품범위별_상품군별거래액(2019-2021).csv',header=T)
+
+
+t_prod_2020 <- read.csv('t_prod_2020.csv')
+t_prod_2021 <- read.csv('t_prod_2021.csv')
+
+t_prod_2020 <- t_prod_2020[,-1]
+t_prod_2021 <- t_prod_2021[,-1]
+
+
+corona <- c(0.9166667,121.1724138,205.1935484,29.5666667,24.3000000,44.9000000,
+              47.9354839,188.5483871,123.5666667,88.6129032,267.1666667,874.2903226)
+month <- c(1,2,3,4,5,6,7,8,9,10,11,12)
+corona_2020 <- data.frame(corona, month)
+
+corona <- c(540.2903,411.3214,439.0645,633.4333,585.9032,564.1667,
+              1356.6129,1731.0000,2010.7667,1697.4839)
+month <- c(1,2,3,4,5,6,7,8,9,10)
+corona_2021 <- data.frame(corona, month)
+
+
+
+#1차 유행기 1~3월
+#2차 유행기 9~12월
+#3차 유행기면 1~6월
+#4차 유행기면 7월~현재까지
+
+all_period_prod <- rbind(t_prod_2020,t_prod_2021)
+all_peirod_prod_2 <- all_period_prod[,-1]
+
+all_period_corn <- rbind(corona_2020,corona_2021)
+
+
+first_p <- all_period_prod[c(1:3),-c(5,6)] # split product period
+second_p <- all_period_prod[c(9:12),-c(5,6)]
+third_p <- all_period_prod[c(13:18),-c(5,6)]
+fourth_p <- all_period_prod[c(19:22),-c(5,6)]
+
+first_c <- first_c[,-c(2)] # split corona period
+second_c <- second_c[,-c(2)]
+third_c <- third_c[,-c(2)]
+fourth_c <- fourth_c[,-c(2)]
+
+
+#### correlation between product and corona 
+
+cor(first_p, first_c) #1~3월
+# 합계평균   0.3271590
+# 음.식료품  0.9440695
+# 농축수산물 0.4960785
+# 음식서비스 0.9711483
+cor(second_p, second_c) #9~12월
+# 합계평균   0.9271875
+# 음.식료품  0.5053078
+# 농축수산물 0.2498084
+# 음식서비스 0.9939355
+cor(third_p, third_c) #1~6월 
+# 합계평균    0.4143481
+# 음.식료품   0.3425763
+# 농축수산물 -0.2847423
+# 음식서비스  0.6432794
+cor(fourth_p, fourth_c) #7월~현재
+# 합계평균   -0.01530186
+# 음.식료품   0.74279310
+# 농축수산물  0.84401903
+# 음식서비스 -0.67902630
+
+install.packages('corrplot')
+library(corrplot)
+
+cor_matrix=cor(first_p, first_c)
+corrplot(cor_matrix, method='number')
+
+cor_matrix_2=cor(second_p, second_c)
+corrplot(cor_matrix_2)
+
+cor_matrix_3=cor(third_p, third_c)
+corrplot(cor_matrix_3)
+
+cor_matrix_4=cor(fourth_p, fourth_c)
+corrplot(cor_matrix_4)
+
+
