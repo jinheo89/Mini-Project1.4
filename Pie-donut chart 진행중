@@ -1,0 +1,40 @@
+setwd("C:/workspace/R_basic/pjt1.4")
+
+purchase_change <-read.csv("최근_1년간_온라인_가공식품_구입_변화(2019-2020).csv", header=TRUE)
+
+pc <- purchase_change[c(1,17:22),-1]
+
+pc_2019 <- pc[,1:6]
+pc_2020 <- pc[,c(1,8:13)]
+
+names(pc_2019) <- c('소득',"매우 감소했다","약간 감소했다","1년전과 비교시 변화 없다",
+                    "약간 증가했다","매우 증가했다")
+pc_2019 <- pc_2019[-1,]
+
+
+names(pc_2020) <- c('소득',"매우 감소했다","약간 감소했다","1년전과 비교시 변화 없다",
+                    "약간 증가했다","매우 증가했다")
+pc_2020 <- pc_2020[-1,]
+
+
+require(ggplot2)
+#install.packages('moonBook')
+require(moonBook)
+#install.packages('webr')
+require(webr)
+
+require(moonBook)
+require(ztable)
+require(ggplot2)
+require(dplyr)
+require(ggforce)
+
+PieDonut(acs,aes(pies=pc,donuts=pc$X2019.2))
+
+
+p <- ggplot()+theme_no_axes()+coord_fixed()
+p + geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1, start = start, end = end, 
+                     fill = '소득'), data = pc_2019)
+
+
+PieDonut(acs,aes(pies=pc_2019,donuts=pc_2019$`1년전과 비교시 변화 없다`),explode=1)
