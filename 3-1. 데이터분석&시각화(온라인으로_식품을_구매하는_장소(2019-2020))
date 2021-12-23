@@ -1,0 +1,93 @@
+setwd("C:/workspace/R_basic/pjt1.4")
+
+data4<-read.csv("온라인으로_식품을_구매하는_장소(2019-2020).csv", header=TRUE)
+
+#1인가구 온라인 식품 구매장소 비율
+#2019년도
+v2019.1<-as.vector(as.matrix(data4[9,c(3:10)]))
+#2020년도
+v2020.1<-as.vector(as.matrix(data4[9,c(11:18)]))
+
+#소득별 온라인 식품 구매장소 비율
+#2019년도 200만원 미만
+v2019.2<-as.vector(as.matrix(data4[17, c(3:10)]))
+#2020년도 200만원 미만
+v2020.2<-as.vector(as.matrix(data4[17, c(11:18)]))
+
+#2019년도 200~300만원 미만
+v2019.3<-as.vector(as.matrix(data4[18, c(3:10)]))
+#2020년도 200~300만원 미만
+v2020.3<-as.vector(as.matrix(data4[18, c(11:18)]))
+
+#2019년도 300~400만원 미만
+v2019.4<-as.vector(as.matrix(data4[19, c(3:10)]))
+#2020년도 300~400만원 미만
+v2020.4<-as.vector(as.matrix(data4[19, c(11:18)]))
+
+#2019년도 400~500만원 미만만
+v2019.5<-as.vector(as.matrix(data4[20, c(3:10)]))
+#2020년도 400~500만원 미만만
+v2020.5<-as.vector(as.matrix(data4[20, c(11:18)]))
+
+#2019년도 500~600만원 미만만
+v2019.6<-as.vector(as.matrix(data4[21, c(3:10)]))
+#2020년도 500~600만원 미만만
+v2020.6<-as.vector(as.matrix(data4[21, c(11:18)]))
+
+#2019년도 600만원 이상
+v2019.7<-as.vector(as.matrix(data4[22, c(3:10)]))
+#2020년도 600만원 이상
+v2020.7<-as.vector(as.matrix(data4[22, c(11:18)]))
+
+#colname 확인
+names<-as.character(data4[1,c(3:length(data4))])
+
+#소득별 온라인 식품 구매장소 비율 비교분석/시각화
+
+v2019.2<-as.numeric(v2019.2)
+v2020.2<-as.numeric(v2020.2)
+v2019.3<-as.numeric(v2019.3)
+v2020.3<-as.numeric(v2020.3)
+v2019.4<-as.numeric(v2019.4)
+v2020.4<-as.numeric(v2020.4)
+v2019.5<-as.numeric(v2019.5)
+v2020.5<-as.numeric(v2020.5)
+v2019.6<-as.numeric(v2019.6)
+v2020.6<-as.numeric(v2020.6)
+v2019.7<-as.numeric(v2019.7)
+v2020.7<-as.numeric(v2020.7)
+
+ratio<-c(v2019.2,v2019.3,v2019.4,v2019.5,v2019.6,v2019.7,v2020.2,v2020.3,v2020.4,v2020.5,v2020.6,v2020.7)
+year<-c(rep(2019,48),rep(2020,48))
+place<-rep(names[1:8],12)
+income<-rep(rep(c('200만원 미만','200~300만원 미만','300~400만원 미만','400~500만원 미만',
+            '500~600만원 미만','600만원 이상'), each=8),2)
+df<-data.frame(ratio,place,year,income)
+
+df_2019 <- df[which(df$year==2019,arr.ind=TRUE),]
+df_2020 <- df[which(df$year==2020,arr.ind=TRUE),]
+
+#install.packages("ggplot2")
+library(ggplot2)
+#install.packages("gridExtra")
+library(gridExtra)
+
+a<-ggplot(df_2019,aes(income,ratio,label=place))+
+  geom_point(aes(color=place))+
+  geom_text_repel()+
+  xlab('소득')+ylab('비율')+
+  scale_x_discrete(limits=c('200만원 미만','200~300만원 미만','300~400만원 미만','400~500만원 미만',
+                            '500~600만원 미만','600만원 이상'))+
+  ggtitle('2019년 소득별 온라인 식품 구매장소 비율')
+a <-  update_labels(a, list(colour='가공식품'))
+
+b<-ggplot(df_2020,aes(income,ratio,label=place))+
+  geom_point(aes(color=place))+
+  geom_text_repel()+
+  xlab('소득')+ylab('비율')+
+  scale_x_discrete(limits=c('200만원 미만','200~300만원 미만','300~400만원 미만','400~500만원 미만',
+                            '500~600만원 미만','600만원 이상'))+
+  ggtitle('2020년 소득별 온라인 식품 구매장소 비율')
+b <-  update_labels(b, list(colour='가공식품'))
+
+grid.arrange(a,b, nrow=2,ncol=1)
