@@ -1,7 +1,6 @@
 ## 데이터분석&시각화(최근_1년간_온라인_가공식품_구입_변화(2019-2020))
 
-
-setwd('C:/workspace/mini_project/project_1.4')
+setwd('C:/workspace/R_basic/pjt1.4')
 data6 <- read.csv('지출액_기준_온라인으로_많이_구입하는_가공식품_품목군(2019-2020).csv',header=T)
 
 income <- data6[c(1,31:36),-1]
@@ -20,16 +19,6 @@ year <- rep(c(2019,2020),each=25)
 inc_y <- cbind(df_income,year)
 
 
-
-
-######
-
-inc_y_2019 <- inc_y[1:25,]
-inc_y_2020 <- inc_y[26:nrow(inc_y),]
-
-
-
-
 grocery <- c("육류가공품","알가공품","조미수산가공품",
              "건조수산가공품","과일가공품","김치류","절임류","드레싱/소스류","장류",
              "유지류","유가공품","빵/떡","과자","초콜릿/코코아제품","간편식",
@@ -38,55 +27,54 @@ grocery <- c("육류가공품","알가공품","조미수산가공품",
 grocery <- rep(grocery,6)
 
 income <- rep(c('200만원 미만','200~300만원 미만','300~400만원 미만','400~500만원 미만',
-                '500~600만원 미만','600만원 이상'), each=25)
+                '500~600만원 미만','600만원 이상'), each=50)
 
 
-inc_1 <- inc_y_2019[,2]
-inc_2 <- inc_y_2019[,3]
-inc_3 <- inc_y_2019[,4]
-inc_4 <- inc_y_2019[,5]
-inc_5 <- inc_y_2019[,6]
-inc_6 <- inc_y_2019[,7]
+inc_1 <- inc_y[,2]
+inc_2 <- inc_y[,3]
+inc_3 <- inc_y[,4]
+inc_4 <- inc_y[,5]
+inc_5 <- inc_y[,6]
+inc_6 <- inc_y[,7]
 
-inc_7 <- inc_y_2020[,2]
-inc_8 <- inc_y_2020[,3]
-inc_9 <- inc_y_2020[,4]
-inc_10 <- inc_y_2020[,5]
-inc_11 <- inc_y_2020[,6]
-inc_12 <- inc_y_2020[,7]
+ratio <-as.numeric(c(inc_1,inc_2,inc_3,inc_4,inc_5,inc_6))
+year <- rep(rep(c(2019,2020), each=25),6)
+
+grocery_df <- data.frame(grocery,ratio,income,year)
 
 
-
-ratio_2019 <- c(inc_1,inc_2,inc_3,inc_4,inc_5,inc_6)
-year_2019 <- rep(2019,150)
-
-grocery_df_2019 <- data.frame(grocery,ratio_2019,income,year)
-
-
-ratio_2020 <- c(inc_7,inc_8,inc_9,inc_10,inc_11,inc_12)
-year_2020 <- rep(2020,150)
-
-grocery_df_2020 <- data.frame(grocery,ratio_2020,income,year)
-
-grocery_df_2019$ratio<- as.integer(grocery_df_2019$ratio)
-grocery_df_2020$ratio<- as.integer(grocery_df_2020$ratio)
+library(ggplot2)
+ggplot(grocery_df, aes(income,grocery)) + geom_point(shape=19)
+grocery_df$ratio<- as.integer(grocery_df$ratio)
 
 #round(grocery_df$ratio,digits=1)
 
 
+high_df <- grocery_df
+high_df_2019 <- high_df[which(high_df$year==2019,arr.ind=TRUE),]
+high_df_2020 <- high_df[which(high_df$year==2020,arr.ind=TRUE),]
 
-  
-  
- ##### plotting  
-  
+ggplot(high_df_2019,aes(income,ratio,label=grocery))+geom_bar(stat='identity')
+geom_text() 
+
+
+
 ggplot(high_df_2019,aes(income,ratio,label=grocery))+
- geom_point(aes(color=grocery))+
- geom_text(vjust=0,nudge_y=0.5,check_overlap = TRUE)+
+  geom_point()+
+  geom_text(aes(colour=factor(grocery)),vjust=0,nudge_y=0.5,check_overlap = TRUE) 
+
+
+
+##### plotting  
+
+ggplot(high_df_2019,aes(income,ratio,label=grocery))+
+  geom_point(aes(color=grocery))+
+  geom_text(vjust=0,nudge_y=0.5,check_overlap = TRUE)+
   labs(label='가공식품')+
   scale_fill_brewer(name='가공식품',palette='Paired')+
   xlab('소득')+ylab('비율')+
   ggtitle('소득별 가공식품 소비 비율')
- 
+
 
 
 library(gridExtra)
