@@ -59,14 +59,15 @@ v2019.7<-as.numeric(v2019.7)
 v2020.7<-as.numeric(v2020.7)
 
 library(ggplot2)
-install.packages("gridExtra")
+#install.packages("gridExtra")
 library(gridExtra)
-
+library(ggrepel)
 #piechart 시각화
 df1<-data.frame("place"=names[1:8],
                 "share"=v2019.1)
 
 p1<-ggplot(df1, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2019년 1인가구 온라인 식품 구매장소 비율")
 
 
@@ -74,7 +75,8 @@ df2<-data.frame("place"=names[1:8],
                 "share"=v2020.1)
 
 p2<-ggplot(df2, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
-  labs(title="2020년 1인가구 온라인 식품 구매장소 비율")
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+   labs(title="2020년 1인가구 온라인 식품 구매장소 비율")
 
 grid.arrange(p1,p2,ncol=2)
 
@@ -90,13 +92,15 @@ df3<-data.frame("place"=names[1:8],
                 "share"=v2019.2)
 
 p1<-ggplot(df3, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
-  labs(title="2019년 소득이 200만원 미만인 경우 온라인 식품 구매장소 비율")
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+   labs(title="2019년 소득이 200만원 미만인 경우 온라인 식품 구매장소 비율")
 
 
 df4<-data.frame("place"=names[1:8],
                 "share"=v2020.2)
 
 p2<-ggplot(df2, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2020년 소득이 200만원 미만인 경우 온라인 식품 구매장소 비율")
 
 grid.arrange(p1,p2,ncol=2)
@@ -112,14 +116,16 @@ df5<-data.frame("place"=names[1:8],
                 "share"=v2019.3)
 
 p1<-ggplot(df5, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
-  labs(title="2019년 소득이 200~300만원인 경우 온라인 식품 구매장소 비율")
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+   labs(title="2019년 소득이 200~300만원인 경우 온라인 식품 구매장소 비율")
 
 
 df6<-data.frame("place"=names[1:8],
                 "share"=v2020.3)
 
 p2<-ggplot(df6, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
-  labs(title="2020년 소득이 200~300만원인 경우 온라인 식품 구매장소 비율")
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+   labs(title="2020년 소득이 200~300만원인 경우 온라인 식품 구매장소 비율")
 
 grid.arrange(p1,p2,ncol=2)
 
@@ -132,13 +138,15 @@ df7<-data.frame("place"=names[1:8],
                 "share"=v2019.4)
 
 p1<-ggplot(df7, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
-  labs(title="2019년 소득이 300~400만원인 경우 온라인 식품 구매장소 비율")
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+   labs(title="2019년 소득이 300~400만원인 경우 온라인 식품 구매장소 비율")
 
 
 df8<-data.frame("place"=names[1:8],
                 "share"=v2020.4)
 
 p2<-ggplot(df8, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2020년 소득이 300~400만원인 경우 온라인 식품 구매장소 비율")
 
 grid.arrange(p1,p2,ncol=2)
@@ -151,13 +159,15 @@ df9<-data.frame("place"=names[1:8],
                 "share"=v2019.5)
 
 p1<-ggplot(df9, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
-  labs(title="2019년 소득이 400~500만원인 경우 온라인 식품 구매장소 비율")
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+   labs(title="2019년 소득이 400~500만원인 경우 온라인 식품 구매장소 비율")
 
 
 df10<-data.frame("place"=names[1:8],
                 "share"=v2020.5)
 
 p2<-ggplot(df10, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2020년 소득이 400~500만원인 경우 온라인 식품 구매장소 비율")
 
 grid.arrange(p1,p2,ncol=2)
@@ -171,6 +181,7 @@ df11<-data.frame("place"=names[1:8],
                 "share"=v2019.6)
 
 p1<-ggplot(df11, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2019년 소득이 500~600만원인 경우 온라인 식품 구매장소 비율")
 
 
@@ -178,6 +189,7 @@ df12<-data.frame("place"=names[1:8],
                 "share"=v2020.6)
 
 p2<-ggplot(df12, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2020년 소득이 500~600만원인 경우 온라인 식품 구매장소 비율")
 
 grid.arrange(p1,p2,ncol=2)
@@ -190,6 +202,7 @@ df13<-data.frame("place"=names[1:8],
                 "share"=v2019.7)
 
 p1<-ggplot(df13, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y", start=0)+
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2019년 소득이 600만원이상인 경우 온라인 식품 구매장소 비율")
 
 
@@ -197,6 +210,7 @@ df14<-data.frame("place"=names[1:8],
                 "share"=v2020.7)
 
 p2<-ggplot(df14, aes(x="", y=share, fill=place))+geom_bar(width=1, stat="identity")+coord_polar("y",start=0)+
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2020년 소득이 600만원이상인 경우 온라인 식품 구매장소 비율")
 
 grid.arrange(p1,p2,ncol=2)
