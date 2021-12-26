@@ -19,20 +19,21 @@ mt2.21<-as.vector(as.matrix(data2[10,c(18:22)]))
 library(ggplot2)
 #install.packages("gridExtra")
 library(gridExtra)
-
+install.packages("ggrepel")
+library(ggrepel)
 #piechart 시각화
 df1<-data.frame("Purpose"=c("식사대용","간식용","안주용","캠핑/여행용","기타"),
               "share"=as.numeric(mt2.11))
 
 p1<-ggplot(df1, aes(x="", y=share, fill=Purpose))+geom_bar(width=1, stat="identity")+coord_polar("y")+
-  geom_text(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5), angle = c(-90, -90, 0, -90)) + 
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5)) + 
   labs(title="2019년 1인가구 즉석조리식품 이용 비율")
 
 df2<-data.frame("Purpose"=c("식사대용","간식용","안주용","캠핑/여행용","기타"),
                 "share"=as.numeric(mt2.21))
 
 p2<-ggplot(df2, aes(x="", y=share, fill=Purpose))+geom_bar(width=1, stat="identity")+coord_polar("y")+
-  geom_text(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5), angle=c(-97,-110,0,-70))+ 
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
     labs(title="2020년 1인가구 즉석조리식품 이용 비율")
 
 grid.arrange(p1,p2,ncol=2)
@@ -48,14 +49,14 @@ df3<-data.frame("Purpose"=c("식사대용","간식용","안주용","캠핑/여�
                 "share"=as.numeric(mt2.12))
 
 p3<-ggplot(df3, aes(x="", y=share, fill=Purpose))+geom_bar(width=1, stat="identity")+coord_polar("y")+
-  geom_text(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
     labs(title="2019년 1인가구 즉석섭취식품 이용 비율")
 
 df4<-data.frame("Purpose"=c("식사대용","간식용","안주용","캠핑/여행용","기타"),
                 "share"=as.numeric(mt2.22))
 
 p4<-ggplot(df4, aes(x="", y=share, fill=Purpose))+geom_bar(width=1, stat="identity")+coord_polar("y")+
-  geom_text(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
    labs(title="2020년 1인가구 즉석섭취식품 이용 비율")
 
 grid.arrange(p3,p4,ncol=2)
@@ -66,17 +67,17 @@ mt2.23<-as.vector(as.matrix(data2[10,c(28:32)]))
 
 #piechart 시각화
 df4<-data.frame("Purpose"=c("식사대용","간식용","안주용","캠핑/여행용","기타"),
-                "share"=as.numeric(mt2.12))
+                "share"=as.numeric(mt2.13))
 
 p4<-ggplot(df4, aes(x="", y=share, fill=Purpose))+geom_bar(width=1, stat="identity")+coord_polar("y")+
-  geom_text(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2019년 1인가구 신선편의식품 이용 비율")
 
 df5<-data.frame("Purpose"=c("식사대용","간식용","안주용","캠핑/여행용","기타"),
-                "share"=as.numeric(mt2.22))
+                "share"=as.numeric(mt2.23))
 
 p5<-ggplot(df5, aes(x="", y=share, fill=Purpose))+geom_bar(width=1, stat="identity")+coord_polar("y")+
-  geom_text(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
+  geom_text_repel(aes(label = paste0(share,"%")), position = position_stack(vjust = 0.5))+ 
   labs(title="2020년 1인가구 신선편의식품 이용 비율")
 
 grid.arrange(p4,p5,ncol=2)
