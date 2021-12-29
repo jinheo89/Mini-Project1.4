@@ -33,6 +33,190 @@ v2020.6<-as.vector(as.matrix(data6[35,28:52]))
 v2019.7<-as.vector(as.matrix(data6[36,3:27]))
 v2020.7<-as.vector(as.matrix(data6[36,28:52]))
 
+v2019.1<-as.numeric(v2019.1)
+v2019.2<-as.numeric(v2019.2)
+v2019.3<-as.numeric(v2019.3)
+v2019.4<-as.numeric(v2019.4)
+v2019.5<-as.numeric(v2019.5)
+v2019.6<-as.numeric(v2019.6)
+v2019.7<-as.numeric(v2019.7)
+v2020.1<-as.numeric(v2020.1)
+v2020.2<-as.numeric(v2020.2)
+v2020.3<-as.numeric(v2020.3)
+v2020.4<-as.numeric(v2020.4)
+v2020.5<-as.numeric(v2020.5)
+v2020.6<-as.numeric(v2020.6)
+v2020.7<-as.numeric(v2020.7)
+
+
+items<-c("육류가공품","알가공품","조미수산가공품","건조수산가공품",
+         "과일가공품","김치류","절임류","드레싱/소스류","장류","유지류","유가공품","빵/떡","과자","초콜릿/코코아제품","간편식",
+         "면류","연식품","전분/분말류","당류","조미식품","커피류",
+         "다류","음료류","주류","건강기능식품")
+
+#1인가구 지출액기준 온라인 가공식품 세부품목
+vec1<-v2020.1-v2019.1
+plus<-vec1[vec1>0]
+mean(plus)
+vec1>1.283
+item1<-c(items[1],items[3],items[12],items[15],items[16])
+#소득별 온라인 가공식품 세부 품목
+
+
+vec2<-v2020.2-v2019.2
+plus<-vec2[vec2>0]
+mean(plus)
+vec2>1.664
+item2<-c(items[3],items[15],items[16])
+
+vec3<-v2020.3-v2019.3
+plus<-vec3[vec3>0]
+mean(plus)
+vec2>1.23
+item3<-c(items[3],items[15],items[16])
+
+vec4<-v2020.4-v2019.4
+plus<-vec4[vec4>0]
+mean(plus)
+vec4>1.42
+item4<-c(items[3],items[11],items[15],items[16])
+
+vec5<-v2020.5-v2019.5
+plus<-vec5[vec5>0]
+mean(plus)
+vec5>1.24
+item5<-c(items[3],items[12],items[15],items[18])
+
+
+vec6<-v2020.6-v2019.6
+plus<-vec6[vec6>0]
+mean(plus)
+vec6>2.26
+item6<-c(items[11],items[15],items[22],items[24])
+
+vec7<-v2020.7-v2019.7
+plus<-vec7[vec7>0]
+mean(plus)
+vec7>1.27
+item7<-c(items[12],items[15])
+
+items_select<-c(items[1],items[3],items[11],items[12],items[15],items[16],items[18],items[22],items[24])
+
+
+v2019.1<-as.numeric(v2019.1[c(1,3,11,12,15,16,18,22,24)])
+v2020.1<-as.numeric(v2020.1[c(1,3,11,12,15,16,18,22,24)])
+v2019.2<-as.numeric(v2019.2[c(1,3,11,12,15,16,18,22,24)])
+v2020.2<-as.numeric(v2020.2[c(1,3,11,12,15,16,18,22,24)])
+v2019.3<-as.numeric(v2019.3[c(1,3,11,12,15,16,18,22,24)])
+v2020.3<-as.numeric(v2020.3[c(1,3,11,12,15,16,18,22,24)])
+v2019.4<-as.numeric(v2019.4[c(1,3,11,12,15,16,18,22,24)])
+v2020.4<-as.numeric(v2020.4[c(1,3,11,12,15,16,18,22,24)])
+v2019.5<-as.numeric(v2019.5[c(1,3,11,12,15,16,18,22,24)])
+v2020.5<-as.numeric(v2020.5[c(1,3,11,12,15,16,18,22,24)])
+v2019.6<-as.numeric(v2019.6[c(1,3,11,12,15,16,18,22,24)])
+v2020.6<-as.numeric(v2020.6[c(1,3,11,12,15,16,18,22,24)])
+v2019.7<-as.numeric(v2019.7[c(1,3,11,12,15,16,18,22,24)])
+v2020.7<-as.numeric(v2020.7[c(1,3,11,12,15,16,18,22,24)])
+
+#코로나 전후 1인가구 지출액 기준 온라인 가공식품 비교 분석/시각화(9개 품목)
+#install.packages("fmsb")
+library(fmsb)
+library(ggplot2)
+
+df3<-rbind(v2019.1,v2020.1)
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4))
+data<-rbind(rep(20,9), rep(0,9),df3)
+rownames(data)<-c("1","2","2019년","2020년")
+colnames(data)<-c("육류가공품","조미수산가공품","유가공품","빵/떡","간편식",  
+                  "면류","전분/분말류","다류","주류")
+data<-data.frame(data)
+radarchart(data, title="코로나19 전후 1인가구 온라인 가공식품 지출비교",
+           pfcol=colors_in)
+
+legend(x=1,y=1,legend=rownames(data[-c(1,2),]), bty="n", col=colors_in, pch=20, cex=1.2, pt.cex=3)
+
+
+#코로나 전후 소득별 지출액 기준 온라인 가공식품 비교분석/시각화(9개 품목)
+#200만원 미만
+df3<-rbind(v2019.2,v2020.2)
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4))
+data<-rbind(rep(20,9), rep(0,9),df3)
+rownames(data)<-c("1","2","2019년","2020년")
+colnames(data)<-c("육류가공품","조미수산가공품","유가공품","빵/떡","간편식",  
+                  "면류","전분/분말류","다류","주류")
+data<-data.frame(data)
+radarchart(data, title="소득 200만원 미만인경우 코로나19 전후 온라인 가공식품 지출비교",
+           pfcol=colors_in)
+
+legend(x=1,y=1,legend=rownames(data[-c(1,2),]), bty="n", col=colors_in, pch=20, cex=1.2, pt.cex=3)
+
+#200~300만원 
+df3<-rbind(v2019.3,v2020.3)
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4))
+data<-rbind(rep(20,9), rep(0,9),df3)
+rownames(data)<-c("1","2","2019년","2020년")
+colnames(data)<-c("육류가공품","조미수산가공품","유가공품","빵/떡","간편식",  
+                  "면류","전분/분말류","다류","주류")
+data<-data.frame(data)
+radarchart(data, title="소득 200~300만원인 경우 코로나19 전후 온라인 가공식품 지출비교",
+           pfcol=colors_in)
+
+legend(x=1,y=1,legend=rownames(data[-c(1,2),]), bty="n", col=colors_in, pch=20, cex=1.2, pt.cex=3)
+
+#300~400만원
+df3<-rbind(v2019.4,v2020.4)
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4))
+data<-rbind(rep(20,9), rep(0,9),df3)
+rownames(data)<-c("1","2","2019년","2020년")
+colnames(data)<-c("육류가공품","조미수산가공품","유가공품","빵/떡","간편식",  
+                  "면류","전분/분말류","다류","주류")
+data<-data.frame(data)
+radarchart(data, title="소득 300~400만원인경우 코로나19 전후 온라인 가공식품 지출비교",
+           pfcol=colors_in)
+
+legend(x=1,y=1,legend=rownames(data[-c(1,2),]), bty="n", col=colors_in, pch=20, cex=1.2, pt.cex=3)
+
+#400~500만원
+df3<-rbind(v2019.5,v2020.5)
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4))
+data<-rbind(rep(20,9), rep(0,9),df3)
+rownames(data)<-c("1","2","2019년","2020년")
+colnames(data)<-c("육류가공품","조미수산가공품","유가공품","빵/떡","간편식",  
+                  "면류","전분/분말류","다류","주류")
+data<-data.frame(data)
+radarchart(data, title="소득 400~500만원인경우 코로나19 전후 온라인 가공식품 지출비교",
+           pfcol=colors_in)
+
+legend(x=1,y=1,legend=rownames(data[-c(1,2),]), bty="n", col=colors_in, pch=20, cex=1.2, pt.cex=3)
+
+#500~600만원
+df3<-rbind(v2019.6,v2020.6)
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4))
+data<-rbind(rep(20,9), rep(0,9),df3)
+rownames(data)<-c("1","2","2019년","2020년")
+colnames(data)<-c("육류가공품","조미수산가공품","유가공품","빵/떡","간편식",  
+                  "면류","전분/분말류","다류","주류")
+data<-data.frame(data)
+radarchart(data, title="소득 500~600만원인경우 코로나19 전후 온라인 가공식품 지출비교",
+           pfcol=colors_in)
+
+legend(x=1,y=1,legend=rownames(data[-c(1,2),]), bty="n", col=colors_in, pch=20, cex=1.2, pt.cex=3)
+
+#600만원 이상
+df3<-rbind(v2019.7,v2020.7)
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4))
+data<-rbind(rep(20,9), rep(0,9),df3)
+rownames(data)<-c("1","2","2019년","2020년")
+colnames(data)<-c("육류가공품","조미수산가공품","유가공품","빵/떡","간편식",  
+                  "면류","전분/분말류","다류","주류")
+data<-data.frame(data)
+radarchart(data, title="소득 600만원 이상인 경우 코로나19 전후 온라인 가공식품 지출비교",
+           pfcol=colors_in)
+
+legend(x=1,y=1,legend=rownames(data[-c(1,2),]), bty="n", col=colors_in, pch=20, cex=1.2, pt.cex=3)
+
+
+
 
 #코로나 전후 1인가구 지출액 기준 온라인 가공식품 비교 분석/시각화
 #colname 확인
