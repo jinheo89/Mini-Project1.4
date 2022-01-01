@@ -1,0 +1,105 @@
+setwd("C:/workspace/R_basic/pjt1.4")
+product <- read.csv('온라인쇼핑몰_판매매체별_상품군별거래액_(2017-2021).csv',header=T)
+
+################################ setup before starting correlation analysis #########################
+# same script of '온라인식품 line graph' in github repository
+
+
+## transform table 
+
+library(dplyr)
+product_all <- product %>% filter(판매매체별=='계') # indexing 
+product_all <- product_all[,-2]
+
+#prod_2019 <- product_all[,c(1:13)]
+prod_before<-product_all[,c(1,2:37)]
+prod_after<-product_all[,c(1,38:59)]
+
+#install.packages("tidyverse")
+library(tidyverse) 
+# convert column values into row names 
+prod_before <- prod_before %>% remove_rownames %>% column_to_rownames(var='상품군별')
+prod_after <- prod_after %>% remove_rownames %>% column_to_rownames(var='상품군별')
+
+
+
+# remove others except for top 3 variables
+prod_before <- prod_before[c(1,13,14,22),] # 합계, 음식료품, 음식서비스, 농축수산물
+prod_after <- prod_after[c(1,13,14,22),]
+
+prod_before[1,]<-prod_before[1,]-prod_before[2,]-prod_before[3,]-prod_before[4,]
+prod_before #식품을 제외한 합계, 음식료품, 음식서비스, 농축수산물
+
+prod_after[1,]<-prod_after[1,]-prod_after[2,]-prod_after[3,]-prod_after[4,]
+prod_after
+
+t_prod_before<-as.data.frame(t(prod_before))
+year1<-c(rep('2017',12),rep('2018',12),rep('2019',12))
+t_prod_before$year<-cbind(year1)
+month1<-c(1:36)
+t_prod_before$month<-cbind(month1)
+
+t_prod_after<-as.data.frame(t(prod_after))
+year2<-c(rep('2020',12),rep('2021',10))
+t_prod_after$year<-cbind(year2)
+month2<-c(1:22)
+t_prod_after$month<-cbind(month2)
+
+
+#식품을 제외한 합계의 평균 column 추가하기
+t_prod_before$합계평균<-t_prod_before$합계/20
+t_prod_after$합계평균<-t_prod_after$합계/20
+
+t_prod_before<-t_prod_before[,-1]
+t_prod_before<-t_prod_before[,c(6,4,5,3,1,2)]
+t_prod_after<-t_prod_after[,-1]
+t_prod_after<-t_prod_after[,c(6,4,5,3,1,2)]
+
+library(ggplot2)
+library(gridExtra)
+a1<-ggplot(data=t_prod_before, aes(x=month, y=합계평균))+
+  geom_point(linetype="solid", color="red", size=1)+stat_smooth(color="#FC4E07", method = "lm")+
+  geom_text(x=30,y=400000, label="y=5133.4x+301343")+
+  labs(title="2017~2019년 합계평균 추세선")
+
+summary(lm(합계평균~month,t_prod_before))
+
+b1<-ggplot(data=t_prod_after, aes(x=month, y=합계평균))+
+  geom_point(linetype="solid", color="red", size=1)+stat_smooth(color="#FC4E07", method = "lm")+
+  geom_text(x=20,y=500000, label="y=6140.4x+440692")+
+  labs(title="2020~2021년 합계평균 추세선")
+
+summary(lm(합계평균~month,t_prod_after))
+
+grid.arrange(a1,b1,nrow=1,ncol=2)
+
+
+a2<-ggplot(data=t_prod_before, aes(x=month, y=음식서비스))+
+  geom_point(linetype="solid", color="red", size=1)+stat_smooth(color="#FC4E07", method = "lm")+
+  geom_text(x=30,y=500000, label="y=24398x+41150")+
+  labs(title="2017~2019년 음식서비스 추세선")
+summary(lm(음식서비스~month,t_prod_before))
+
+b2<-ggplot(data=t_prod_after, aes(x=month, y=음식서비스))+
+  geom_point(linetype="solid", color="red", size=1)+stat_smooth(color="#FC4E07", method = "lm")+
+  geom_text(x=15,y=1500000, label="y=62523x+1031204")+
+  labs(title="2020~2021년 음식서비스 추세선")
+
+summary(lm(음식서비스~month,t_prod_after))
+
+grid.arrange(a2,b2,nrow=1,ncol=2)
+
+
+a3<-ggplot(data=t_prod_before, aes(x=month, y=t_prod_before$`음·식료품`))+
+  geom_point(linetype="solid", color="red", size=1)+stat_smooth(color="#FC4E07", method = "lm")+
+  geom_text(x=30,y=900000, label="y=18327x+548119")+
+  labs(title="2017~2019년 음식료품 추세선")
+summary(lm(t_prod_before$`음·식료품`~month,t_prod_before))
+
+b3<-ggplot(data=t_prod_after, aes(x=month, y=t_prod_after$`음·식료품`))+
+  geom_point(linetype="solid", color="red", size=1)+stat_smooth(color="#FC4E07", method = "lm")+
+  geom_text(x=15,y=1800000, label="y=35921x+1413177")+
+  labs(title="2020~2021년 음식료품 추세선")
+summary(lm(t_prod_after$`음·식료품`~month,t_prod_after))
+
+grid.arrange(a3,b3,nrow=1,ncol=2)
